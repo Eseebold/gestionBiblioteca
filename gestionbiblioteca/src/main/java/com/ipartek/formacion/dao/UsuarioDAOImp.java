@@ -27,11 +27,10 @@ import com.ipartek.formacion.dao.persistence.Usuario;
  * @author Turbo
  *
  */
-@Repository("alumnoDAOImp")
+@Repository("usuarioDAOImp")
 public class UsuarioDAOImp implements UsuarioDAO {
 
-	private static final Logger logger = LoggerFactory
-			.getLogger(UsuarioDAOImp.class);
+	private static final Logger logger = LoggerFactory.getLogger(UsuarioDAOImp.class);
 
 	@Autowired
 	private DataSource dataSource;
@@ -58,12 +57,11 @@ public class UsuarioDAOImp implements UsuarioDAO {
 		return usuarios;
 	}
 
-	public Usuario GetById(int id) {
+	public Usuario getById(int id) {
 		Usuario usuario = null;
 		final String SQL = "SELECT codigo, nombre, apellidos, fNacimiento, email FROM usuario WHERE codigo = ?;";
 		try {
-			usuario = jdbctemplate.queryForObject(SQL, new Object[] { id },
-					new UsuarioMapper());
+			usuario = jdbctemplate.queryForObject(SQL, new Object[] { id }, new UsuarioMapper());
 		} catch (EmptyResultDataAccessException e) {
 			usuario = new Usuario();
 		} catch (Exception e) {
@@ -82,11 +80,8 @@ public class UsuarioDAOImp implements UsuarioDAO {
 		 * SqlParameterSource (tipo Map) guarda los paramentros necesarios para
 		 * el procedimiento
 		 */
-		SqlParameterSource in = new MapSqlParameterSource()
-				.addValue("nombre", usuario.getNombre())
-				.addValue("apellidos", usuario.getApellidos())
-				.addValue("fecha", new Date(usuario.getfNacimiento().getTime()))
-				.addValue("email", usuario.getEmail());
+		SqlParameterSource in = new MapSqlParameterSource().addValue("nombre", usuario.getNombre()).addValue("apellidos", usuario.getApellidos())
+				.addValue("fecha", new Date(usuario.getfNacimiento().getTime())).addValue("email", usuario.getEmail());
 
 		Map<String, Object> out = jdbcCall.execute(in);
 		/*
@@ -99,11 +94,7 @@ public class UsuarioDAOImp implements UsuarioDAO {
 
 	public Usuario update(Usuario usuario) {
 		final String SQL = "UPDATE usuario SET nombre = ?, apellidos = ?, fNacimiento = ?, email = ?  WHERE codigo = ?;";
-		jdbctemplate.update(
-				SQL,
-				new Object[] { usuario.getNombre(), usuario.getApellidos(),
-						usuario.getfNacimiento(), usuario.getEmail(),
-						usuario.getCodigo() });
+		jdbctemplate.update(SQL, new Object[] { usuario.getNombre(), usuario.getApellidos(), usuario.getfNacimiento(), usuario.getEmail(), usuario.getCodigo() });
 		logger.info("update ejecutado");
 		return usuario;
 

@@ -13,7 +13,7 @@ public interface UsuarioDAO extends DAOSetter {
 
 	public List<Usuario> getAll();
 
-	public Usuario GetById(int id);
+	public Usuario getById(int id);
 
 	public Usuario create(Usuario usuario);
 

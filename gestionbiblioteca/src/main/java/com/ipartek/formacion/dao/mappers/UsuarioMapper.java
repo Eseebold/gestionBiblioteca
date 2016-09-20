@@ -14,7 +14,7 @@ import com.ipartek.formacion.dao.persistence.Usuario;
  */
 public class UsuarioMapper implements RowMapper<Usuario> {
 
-	  public Usuario mapRow(ResultSet rs, int arg1) throws SQLException {
+	public Usuario mapRow(ResultSet rs, int arg1) throws SQLException {
 		Usuario usuario = new Usuario();
 		usuario.setCodigo(rs.getInt("codigo"));
 		usuario.setNombre(rs.getString("nombre"));

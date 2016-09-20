@@ -8,5 +8,5 @@ import javax.sql.DataSource;
  *
  */
 public interface DAOSetter {
-  public void setDataSource(DataSource dataSource);
+	public void setDataSource(DataSource dataSource);
 }
