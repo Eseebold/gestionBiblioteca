@@ -19,8 +19,6 @@
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
 		<cxf.version>3.0.2</cxf.version>
 		<cxf.scope>compile</cxf.scope>
-
-
 	</properties>
 	<dependencies>
 		<!-- APACHE CXF -->
@@ -240,35 +238,60 @@
 					<mainClass>org.test.int1.Main</mainClass>
 				</configuration>
 			</plugin>
-			<plugin>
-				<groupId>org.apache.cxf</groupId>
-				<artifactId>cxf-java2ws.plugin</artifactId>
-				<version>${cxf.version}</version>
-				<executions>
-					<execution>
-						<id>generate-wsdl</id>
-						<phase>process-classes</phase>
-						<configuration>
-							<className>com.ipartek.formacion.soapservers.UsuarioServiceSOAPImp</className>
-							<serviceName>UsuarioService</serviceName>
-							<address>http://localhost:8080/formacion/soap</address>
-							<outputFile>${basedir}\src\main\resources\wsdl</outputFile>
-							<argline>-createxdsimports</argline>
-							<genWsdl>true</genWsdl>
-							<verbose>true</verbose>
-							<skip>false</skip>
-							<genWrapperbean>false</genWrapperbean>
-							<genClient>false</genClient>
-							<genServer>false</genServer>
-
-						</configuration>
-						<goals>
-							<goal>java2ws</goal>
-						</goals>
-
-					</execution>
-				</executions>
-			</plugin>
+			  <plugin>
+                <groupId>org.apache.cxf</groupId>
+                <artifactId>cxf-java2ws-plugin</artifactId>
+                <version>${cxf.version}</version>
+                <executions>
+                    <execution>
+                        <id>process-classes</id>
+                        <phase>process-classes</phase>
+                        <configuration>
+                            <!-- service endpoint interface or class -->
+                            <className>com.ipartek.formacion.soapservers.CursoServiceSOAP</className>
+                            <!-- location where wsdl file will be generated -->
+                            <outputFile>${project.basedir}/src/main/resources/wsdl/CursoService.wsdl</outputFile>
+                            <genWsdl>true</genWsdl>
+                            <verbose>true</verbose>
+                            <!-- mention service address otherwise it will generate default URL -->
+                            <!-- pattern : http://<host>:<port>/<project artifactId will be used as context-path here or you may have different context path>/<service end point> -->
+                            <address>http://localhost:8080/${project.artifactId}/services/cursoService</address>
+                        </configuration>
+                        <goals>
+                            <goal>java2ws</goal>
+                        </goals>
+                    </execution>
+                </executions>
+            </plugin>
 		</plugins>
+		<pluginManagement>
+			<plugins>
+				<!--This plugin's configuration is used to store Eclipse m2e settings only. It has no influence on the Maven build itself.-->
+				<plugin>
+					<groupId>org.eclipse.m2e</groupId>
+					<artifactId>lifecycle-mapping</artifactId>
+					<version>1.0.0</version>
+					<configuration>
+						<lifecycleMappingMetadata>
+							<pluginExecutions>
+								<pluginExecution>
+									<pluginExecutionFilter>
+										<groupId>org.apache.cxf</groupId>
+										<artifactId>cxf-java2ws-plugin</artifactId>
+										<versionRange>[3.0.2,)</versionRange>
+										<goals>
+											<goal>java2ws</goal>
+										</goals>
+									</pluginExecutionFilter>
+									<action>
+										<ignore></ignore>
+									</action>
+								</pluginExecution>
+							</pluginExecutions>
+						</lifecycleMappingMetadata>
+					</configuration>
+				</plugin>
+			</plugins>
+		</pluginManagement>
 	</build>
 </project>

@@ -26,7 +26,7 @@ public class HomeController {
 	public ModelAndView home(Locale locale, Model model) {
 		ModelAndView mav = null;
 		mav = new ModelAndView("home");
-		logger.info("Carga la página web");
+		logger.info("Carga la pagina web");
 		return mav;
 	}
 
