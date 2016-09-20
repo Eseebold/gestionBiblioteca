@@ -9,7 +9,7 @@ import com.ipartek.formacion.dao.interfaces.UsuarioDAO;
 import com.ipartek.formacion.dao.persistence.Usuario;
 import com.ipartek.formacion.service.interfaces.UsuarioService;
 
-public class UsuarioServiceImp implements UsuarioService {
+public class UsuariosServiceImp implements UsuarioService {
 
 	@Autowired
 	private UsuarioDAO usuDAO = null;

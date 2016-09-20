@@ -7,7 +7,6 @@ import java.util.Map;
 
 import javax.sql.DataSource;
 
-import org.neo4j.cypher.internal.compiler.v2_1.perty.printToString;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;

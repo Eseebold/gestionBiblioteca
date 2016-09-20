@@ -27,7 +27,7 @@ public class UsuarioValidator implements Validator {
 		ValidationUtils.rejectIfEmptyOrWhitespace(errors, "email", "emailRequeridos", "Email requerido");
 
 		Usuario usu = (Usuario) obj;
-		
+
 		// ########## Metodo para ver si el codigo es 1 o superior
 		if (usu.getCodigo() < 1) {
 			errors.rejectValue("codigo", "codigoNulo", new Object[] { "'codigo'" }, "No puede ser ese valor");
@@ -50,7 +50,7 @@ public class UsuarioValidator implements Validator {
 		fActual.set(Calendar.MINUTE, 0);
 		fActual.set(Calendar.SECOND, 0);
 		fActual.set(Calendar.MILLISECOND, 0);
-		
+
 		if (fIntroducida.compareTo(fActual) >= 0) {
 			errors.rejectValue("fNacimiento", "fechaInvalida", new Object[] { "'fNacimiento'" }, "La fecha debe ser anterior al dia de hoy");
 		}
