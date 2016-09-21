@@ -23,7 +23,7 @@ public class UsuarioValidator implements Validator {
 		// ########## Metodo para ver si los siguientes campos estan o no vacios
 		ValidationUtils.rejectIfEmpty(errors, "nombre", "nombreRequest", "�El usuario carece de nombre? �Podria bautizarte como Poncho?");
 		ValidationUtils.rejectIfEmpty(errors, "apellidos", "apellidosRequest", "Apellidos no puede estar vacio");
-		ValidationUtils.rejectIfEmpty(errors, "fNacimiento", "fNacimientoRequerida", "Fecha de nacimiento requerida");
+		ValidationUtils.rejectIfEmpty(errors, "fnacimiento", "fnacimientoRequerida", "Fecha de nacimiento requerida");
 		ValidationUtils.rejectIfEmpty(errors, "email", "emailRequeridos", "Email requerido");
 
 		Usuario usu = (Usuario) obj;
@@ -36,7 +36,7 @@ public class UsuarioValidator implements Validator {
 		// ########## Metodo para ver si la fecha introducida no es del futuro
 		Calendar fIntroducida = new GregorianCalendar();
 		Calendar fActual = new GregorianCalendar();
-		fIntroducida.setTime(usu.getfNacimiento());
+		fIntroducida.setTime(usu.getFnacimiento());
 		fActual.setTime(new Date());
 
 		fIntroducida.set(Calendar.HOUR, 0);

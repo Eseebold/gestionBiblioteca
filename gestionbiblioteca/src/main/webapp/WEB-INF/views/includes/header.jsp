@@ -33,6 +33,9 @@
 				id="bs-example-navbar-collapse-1">
 				<ul class="nav navbar-nav">
 					<li><a href="<c:url value='/usuarios'/>">usuarios</a></li>
+					<li><a href="<c:url value='/libros'/>">libros</a></li>
+					<li><a href="<c:url value='/ejemplares'/>">ejemplares</a></li>
+					
 				</ul>
 			</div>
 			<!-- /.navbar-collapse -->

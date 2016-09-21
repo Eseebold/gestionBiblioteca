@@ -49,8 +49,9 @@ public class UsuarioDAOImp implements UsuarioDAO {
 			usuarios = jdbctemplate.query(SQL, new UsuarioMapper());
 		} catch (EmptyResultDataAccessException e) {
 			usuarios = new ArrayList<Usuario>();
+			logger.info("EmptyResultDataAccessException");
 		} catch (Exception e) {
-			logger.error(e.getMessage());
+			logger.error(e.getMessage()+"Exception");
 		}
 		logger.info("GetAll ejecutado");
 		return usuarios;
@@ -80,7 +81,7 @@ public class UsuarioDAOImp implements UsuarioDAO {
 		 * el procedimiento
 		 */
 		SqlParameterSource in = new MapSqlParameterSource().addValue("nombre", usuario.getNombre()).addValue("apellidos", usuario.getApellidos())
-				.addValue("fecha", new Date(usuario.getfNacimiento().getTime())).addValue("email", usuario.getEmail());
+				.addValue("fecha", new Date(usuario.getFnacimiento().getTime())).addValue("email", usuario.getEmail());
 
 		Map<String, Object> out = jdbcCall.execute(in);
 		/*
@@ -93,7 +94,7 @@ public class UsuarioDAOImp implements UsuarioDAO {
 
 	public Usuario update(Usuario usuario) {
 		final String SQL = "UPDATE usuario SET nombre = ?, apellidos = ?, fNacimiento = ?, email = ?  WHERE codigo = ?;";
-		jdbctemplate.update(SQL, new Object[] { usuario.getNombre(), usuario.getApellidos(), usuario.getfNacimiento(), usuario.getEmail(), usuario.getCodigo() });
+		jdbctemplate.update(SQL, new Object[] { usuario.getNombre(), usuario.getApellidos(), usuario.getFnacimiento(), usuario.getEmail(), usuario.getCodigo() });
 		logger.info("update ejecutado");
 		return usuario;
 

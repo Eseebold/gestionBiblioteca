@@ -12,7 +12,7 @@ public class Usuario {
 	private int codigo;
 	private String nombre;
 	private String apellidos;
-	private Date fNacimiento;
+	private Date fnacimiento;
 	private String email;
 
 	public Usuario() {
@@ -20,7 +20,7 @@ public class Usuario {
 		setCodigo(0);
 		setNombre("");
 		setApellidos("");
-		setfNacimiento(new Date());
+		setFnacimiento(new Date());
 		setEmail("");
 
 	}
@@ -49,12 +49,12 @@ public class Usuario {
 		this.apellidos = apellidos;
 	}
 
-	public Date getfNacimiento() {
-		return fNacimiento;
+	public Date getFnacimiento() {
+		return fnacimiento;
 	}
 
-	public void setfNacimiento(Date fNacimiento) {
-		this.fNacimiento = fNacimiento;
+	public void setFnacimiento(Date fnacimiento) {
+		this.fnacimiento = fnacimiento;
 	}
 
 	public String getEmail() {
