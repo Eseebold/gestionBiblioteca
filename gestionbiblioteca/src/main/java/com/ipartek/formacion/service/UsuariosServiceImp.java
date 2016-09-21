@@ -36,7 +36,7 @@ public class UsuariosServiceImp implements UsuarioService {
 
 	}
 
-	public void setusuDAO(UsuarioDAOImp usuDAO) {
+	public void setUsuDAO(UsuarioDAOImp usuDAO) {
 		this.usuDAO = usuDAO;
 	}
 

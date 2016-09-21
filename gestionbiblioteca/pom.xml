@@ -2,7 +2,7 @@
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
 	<modelVersion>4.0.0</modelVersion>
 	<groupId>com.ipartek</groupId>
-	<artifactId>formacion</artifactId>
+	<artifactId>artifactId</artifactId>
 	<name>name</name>
 	<packaging>war</packaging>
 	<version>1.0.0-BUILD-SNAPSHOT</version>
@@ -238,35 +238,35 @@
 					<mainClass>org.test.int1.Main</mainClass>
 				</configuration>
 			</plugin>
-			  <plugin>
-                <groupId>org.apache.cxf</groupId>
-                <artifactId>cxf-java2ws-plugin</artifactId>
-                <version>${cxf.version}</version>
-                <executions>
-                    <execution>
-                        <id>process-classes</id>
-                        <phase>process-classes</phase>
-                        <configuration>
-                            <!-- service endpoint interface or class -->
-                            <className>com.ipartek.formacion.soapservers.CursoServiceSOAP</className>
-                            <!-- location where wsdl file will be generated -->
-                            <outputFile>${project.basedir}/src/main/resources/wsdl/CursoService.wsdl</outputFile>
-                            <genWsdl>true</genWsdl>
-                            <verbose>true</verbose>
-                            <!-- mention service address otherwise it will generate default URL -->
-                            <!-- pattern : http://<host>:<port>/<project artifactId will be used as context-path here or you may have different context path>/<service end point> -->
-                            <address>http://localhost:8080/${project.artifactId}/services/cursoService</address>
-                        </configuration>
-                        <goals>
-                            <goal>java2ws</goal>
-                        </goals>
-                    </execution>
-                </executions>
-            </plugin>
+			<plugin>
+				<groupId>org.apache.cxf</groupId>
+				<artifactId>cxf-java2ws-plugin</artifactId>
+				<version>${cxf.version}</version>
+				<executions>
+					<execution>
+						<id>process-classes</id>
+						<phase>process-classes</phase>
+						<configuration>
+							<!-- service endpoint interface or class -->
+							<className>com.ipartek.formacion.soapservers.CursoServiceSOAP</className>
+							<!-- location where wsdl file will be generated -->
+							<outputFile>${project.basedir}/src/main/resources/wsdl/CursoService.wsdl</outputFile>
+							<genWsdl>true</genWsdl>
+							<verbose>true</verbose>
+							<!-- mention service address otherwise it will generate default URL -->
+							<!-- pattern : http://<host>:<port>/<project artifactId will be used as context-path here or you may have different context path>/<service end point> -->
+							<address>http://localhost:8080/${project.artifactId}/services/cursoService</address>
+						</configuration>
+						<goals>
+							<goal>java2ws</goal>
+						</goals>
+					</execution>
+				</executions>
+			</plugin>
 		</plugins>
 		<pluginManagement>
 			<plugins>
-				<!--This plugin's configuration is used to store Eclipse m2e settings only. It has no influence on the Maven build itself.-->
+				<!--This plugin's configuration is used to store Eclipse m2e settings only. It has no influence on the Maven build itself. -->
 				<plugin>
 					<groupId>org.eclipse.m2e</groupId>
 					<artifactId>lifecycle-mapping</artifactId>

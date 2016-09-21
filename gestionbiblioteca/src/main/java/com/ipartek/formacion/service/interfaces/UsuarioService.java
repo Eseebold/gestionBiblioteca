@@ -25,5 +25,5 @@ public interface UsuarioService {
 
 	public void delete(int id);
 
-	public void setusuDAO(UsuarioDAOImp usuDAO);
+	public void setUsuDAO(UsuarioDAOImp usuDAO);
 }
