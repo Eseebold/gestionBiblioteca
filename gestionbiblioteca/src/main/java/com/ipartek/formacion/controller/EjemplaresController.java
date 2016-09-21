@@ -8,6 +8,7 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.beans.propertyeditors.CustomDateEditor;
+import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.validation.Validator;
@@ -23,7 +24,8 @@ import org.springframework.web.servlet.mvc.multiaction.MultiActionController;
 
 import com.ipartek.formacion.dao.persistence.Ejemplar;
 import com.ipartek.formacion.service.interfaces.EjemplarService;
-
+@Controller
+@RequestMapping(value = "/ejemplares")
 public class EjemplaresController extends MultiActionController {
 
 	private static final Logger logger = LoggerFactory.getLogger(LibrosController.class);

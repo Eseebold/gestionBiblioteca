@@ -26,7 +26,7 @@ import com.ipartek.formacion.dao.persistence.Ejemplar;
  * @author Turbo
  *
  */
-@Repository("EjemplarDAOImp")
+@Repository("ejemplarDAOImp")
 public class EjemplarDAOImp implements EjemplarDAO {
 
 	private static final Logger logger = LoggerFactory.getLogger(EjemplarDAOImp.class);
@@ -44,7 +44,7 @@ public class EjemplarDAOImp implements EjemplarDAO {
 
 	public List<Ejemplar> getAll() {
 		List<Ejemplar> ejemplares = new ArrayList<Ejemplar>();
-		final String SQL = "SELECT codigo, editorial, pagians FROM ejemplar;";
+		final String SQL = "SELECT codigo, editorial, paginas FROM ejemplar;";
 		try {
 			ejemplares = jdbctemplate.query(SQL, new EjemplarMapper());
 		} catch (EmptyResultDataAccessException e) {
@@ -58,7 +58,7 @@ public class EjemplarDAOImp implements EjemplarDAO {
 
 	public Ejemplar getById(int id) {
 		Ejemplar ejemplar = null;
-		final String SQL = "SELECT codigo, editorial, pagianas FROM ejemplar WHERE codigo = ?;";
+		final String SQL = "SELECT codigo, editorial, paginas FROM ejemplar WHERE codigo = ?;";
 		try {
 			ejemplar = jdbctemplate.queryForObject(SQL, new Object[] { id }, new EjemplarMapper());
 		} catch (EmptyResultDataAccessException e) {
@@ -91,7 +91,7 @@ public class EjemplarDAOImp implements EjemplarDAO {
 	}
 
 	public Ejemplar update(Ejemplar ejemplar) {
-		final String SQL = "UPDATE libro SET editorial = ?, pagians = ?  WHERE codigo = ?;";
+		final String SQL = "UPDATE libro SET editorial = ?, paginas = ?  WHERE codigo = ?;";
 		jdbctemplate.update(SQL, new Object[] { ejemplar.getEditorial(), ejemplar.getPaginas() });
 		logger.info("update ejecutado");
 		return ejemplar;

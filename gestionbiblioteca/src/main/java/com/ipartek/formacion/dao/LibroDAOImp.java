@@ -26,7 +26,7 @@ import com.ipartek.formacion.dao.persistence.Libro;
  * @author Turbo
  *
  */
-@Repository("LibroDAOImp")
+@Repository("libroDAOImp")
 public class LibroDAOImp implements LibroDAO {
 
 	private static final Logger logger = LoggerFactory.getLogger(LibroDAOImp.class);
