@@ -17,19 +17,19 @@ import org.springframework.jdbc.core.namedparam.SqlParameterSource;
 import org.springframework.jdbc.core.simple.SimpleJdbcCall;
 import org.springframework.stereotype.Repository;
 
-import com.ipartek.formacion.dao.interfaces.LibroDAO;
-import com.ipartek.formacion.dao.mappers.LibroMapper;
-import com.ipartek.formacion.dao.persistence.Libro;
+import com.ipartek.formacion.dao.interfaces.EjemplarDAO;
+import com.ipartek.formacion.dao.mappers.EjemplarMapper;
+import com.ipartek.formacion.dao.persistence.Ejemplar;
 
 /**
  * 
  * @author Turbo
  *
  */
-@Repository("LibroDAOImp")
-public class LibroDAOImp implements LibroDAO {
+@Repository("EjemplarDAOImp")
+public class EjemplarDAOImp implements EjemplarDAO {
 
-	private static final Logger logger = LoggerFactory.getLogger(LibroDAOImp.class);
+	private static final Logger logger = LoggerFactory.getLogger(EjemplarDAOImp.class);
 
 	@Autowired
 	private DataSource dataSource;
@@ -42,60 +42,59 @@ public class LibroDAOImp implements LibroDAO {
 		this.jdbcCall = new SimpleJdbcCall(dataSource);
 	}
 
-	public List<Libro> getAll() {
-		List<Libro> libros = new ArrayList<Libro>();
-		final String SQL = "SELECT codigo, titulo, autor, isbn FROM libro;";
+	public List<Ejemplar> getAll() {
+		List<Ejemplar> ejemplares = new ArrayList<Ejemplar>();
+		final String SQL = "SELECT codigo, editorial, pagians FROM ejemplar;";
 		try {
-			libros = jdbctemplate.query(SQL, new LibroMapper());
+			ejemplares = jdbctemplate.query(SQL, new EjemplarMapper());
 		} catch (EmptyResultDataAccessException e) {
-			libros = new ArrayList<Libro>();
+			ejemplares = new ArrayList<Ejemplar>();
 		} catch (Exception e) {
 			logger.error(e.getMessage());
 		}
 		logger.info("GetAll ejecutado");
-		return libros;
+		return ejemplares;
 	}
 
-	public Libro getById(int id) {
-		Libro libro = null;
-		final String SQL = "SELECT codigo, titulo, autor, isbn FROM libro WHERE codigo = ?;";
+	public Ejemplar getById(int id) {
+		Ejemplar ejemplar = null;
+		final String SQL = "SELECT codigo, editorial, pagianas FROM ejemplar WHERE codigo = ?;";
 		try {
-			libro = jdbctemplate.queryForObject(SQL, new Object[] { id }, new LibroMapper());
+			ejemplar = jdbctemplate.queryForObject(SQL, new Object[] { id }, new EjemplarMapper());
 		} catch (EmptyResultDataAccessException e) {
-			libro = new Libro();
+			ejemplar = new Ejemplar();
 		} catch (Exception e) {
 			logger.error(e.getMessage());
 		}
 		logger.info("GetById ejecutado");
-		return libro;
+		return ejemplar;
 	}
 
-	public Libro create(Libro libro) {
+	public Ejemplar create(Ejemplar ejemplar) {
 		/*
 		 * createUsuario --> Nombre del procedimiento almacenado
 		 */
-		jdbcCall.withProcedureName("createLibro");
+		jdbcCall.withProcedureName("createEjemplar");
 		/*
 		 * SqlParameterSource (tipo Map) guarda los paramentros necesarios para
 		 * el procedimiento
 		 */
-		SqlParameterSource in = new MapSqlParameterSource().addValue("titulo", libro.getTitulo()).addValue("autor", libro.getAutor())
-				.addValue("isbn", libro.getIsbn());
+		SqlParameterSource in = new MapSqlParameterSource().addValue("editorial", ejemplar.getEditorial()).addValue("paginas", ejemplar.getPaginas());
 
 		Map<String, Object> out = jdbcCall.execute(in);
 		/*
 		 * Recogemos el parametro OUT del procedimiento
 		 */
-		libro.setCodigo((Integer) out.get("codigo"));
+		ejemplar.setCodigo((Integer) out.get("codigo"));
 		logger.info("create ejecutado");
-		return libro;
+		return ejemplar;
 	}
 
-	public Libro update(Libro libro) {
-		final String SQL = "UPDATE libro SET titulo = ?, autor = ?, isbn = ?  WHERE codigo = ?;";
-		jdbctemplate.update(SQL, new Object[] { libro.getTitulo(), libro.getAutor(), libro.getIsbn(), libro.getCodigo() });
+	public Ejemplar update(Ejemplar ejemplar) {
+		final String SQL = "UPDATE libro SET editorial = ?, pagians = ?  WHERE codigo = ?;";
+		jdbctemplate.update(SQL, new Object[] { ejemplar.getEditorial(), ejemplar.getPaginas() });
 		logger.info("update ejecutado");
-		return libro;
+		return ejemplar;
 
 	}
 

@@ -9,9 +9,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.servlet.ModelAndView;
-/**
- * @author Turbo
- */
+
 /**
  * Handles requests for the application home page.
  */
@@ -28,7 +26,7 @@ public class HomeController {
   public ModelAndView home(Locale locale, Model model) {
     ModelAndView mav = null;
     mav = new ModelAndView("home");
-    logger.info("carga la página web");
+    logger.info("Carga la página web");
     return mav;
   }
 

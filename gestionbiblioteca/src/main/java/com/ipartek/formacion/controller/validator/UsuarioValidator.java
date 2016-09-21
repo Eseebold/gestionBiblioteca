@@ -21,10 +21,10 @@ public class UsuarioValidator implements Validator {
 
 	public void validate(Object obj, Errors errors) {
 		// ########## Metodo para ver si los siguientes campos estan o no vacios
-		ValidationUtils.rejectIfEmpty(errors, "nombre", "nombreRequest", "¿El usuario carece de nombre? ¿Podria bautizarte como Poncho?");
+		ValidationUtils.rejectIfEmpty(errors, "nombre", "nombreRequest", "ï¿½El usuario carece de nombre? ï¿½Podria bautizarte como Poncho?");
 		ValidationUtils.rejectIfEmpty(errors, "apellidos", "apellidosRequest", "Apellidos no puede estar vacio");
-		ValidationUtils.rejectIfEmptyOrWhitespace(errors, "fNacimiento", "fNacimientoRequerida", "Fecha de nacimiento requerida");
-		ValidationUtils.rejectIfEmptyOrWhitespace(errors, "email", "emailRequeridos", "Email requerido");
+		ValidationUtils.rejectIfEmpty(errors, "fNacimiento", "fNacimientoRequerida", "Fecha de nacimiento requerida");
+		ValidationUtils.rejectIfEmpty(errors, "email", "emailRequeridos", "Email requerido");
 
 		Usuario usu = (Usuario) obj;
 

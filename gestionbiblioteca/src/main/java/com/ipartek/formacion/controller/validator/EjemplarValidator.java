@@ -7,25 +7,24 @@ import org.springframework.validation.Errors;
 import org.springframework.validation.ValidationUtils;
 import org.springframework.validation.Validator;
 
-import com.ipartek.formacion.dao.persistence.Libro;
+import com.ipartek.formacion.dao.persistence.Ejemplar;
 
-public class LibroValidator implements Validator {
+public class EjemplarValidator implements Validator {
 	private static final Logger logger = LoggerFactory.getLogger(UsuarioValidator.class);
 
 	public boolean supports(Class<?> argumento) {
-		return Libro.class.equals(argumento);
+		return Ejemplar.class.equals(argumento);
 	}
 
 	public void validate(Object obj, Errors errors) {
 		// ########## Metodo para ver si los siguientes campos estan o no vacios
-		ValidationUtils.rejectIfEmpty(errors, "titulo", "tituloRequest", "�El usuario carece de nombre? �Podria bautizarte como Poncho?");
-		ValidationUtils.rejectIfEmpty(errors, "nombre", "nombreRequest", "nombre no puede estar vacio");
-		ValidationUtils.rejectIfEmpty(errors, "isbn", "isbnRequeridos", "isbn requerido");
+		ValidationUtils.rejectIfEmpty(errors, "editorial", "editorialRequest", "¿Quien lo ha editado?");
+		ValidationUtils.rejectIfEmpty(errors, "paginas", "paginasRequest", "paginas no puede estar vacio");
 
-		Libro lib = (Libro) obj;
+		Ejemplar eje = (Ejemplar) obj;
 
 		// ########## Metodo para ver si el codigo es 1 o superior
-		if (lib.getCodigo() < 1) {
+		if (eje.getCodigo() < 1) {
 			errors.rejectValue("codigo", "codigoNulo", new Object[] { "'codigo'" }, "No puede ser ese valor");
 		}
 

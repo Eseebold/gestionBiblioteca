@@ -8,7 +8,6 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.beans.propertyeditors.CustomDateEditor;
-import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.validation.Validator;
@@ -22,19 +21,17 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.mvc.multiaction.MultiActionController;
 
-import com.ipartek.formacion.dao.persistence.Usuario;
-import com.ipartek.formacion.service.interfaces.UsuarioService;
-//@EnableAspectJAutoProxy(proxyTargetClass = true) 
-@Controller
-@RequestMapping(value = "/usuarios")
-public class UsuariosController extends MultiActionController {
+import com.ipartek.formacion.dao.persistence.Ejemplar;
+import com.ipartek.formacion.service.interfaces.EjemplarService;
 
-	private static final Logger logger = LoggerFactory.getLogger(UsuariosController.class);
+public class EjemplaresController extends MultiActionController {
+
+	private static final Logger logger = LoggerFactory.getLogger(LibrosController.class);
 	@Autowired
-	private UsuarioService usuService;
+	private EjemplarService ejeService = null;
 	private ModelAndView mav = null;
 	@Autowired
-	@Qualifier("usuarioValidator")
+	@Qualifier("ejemplarValidator")
 	private Validator validator;
 
 	@InitBinder
@@ -45,44 +42,44 @@ public class UsuariosController extends MultiActionController {
 
 	@RequestMapping(method = RequestMethod.GET)
 	public ModelAndView getAll() {
-		mav = new ModelAndView("/usuarios/listado");
-		mav.addObject("listaUsuarios", usuService.getAll());
+		mav = new ModelAndView("/ejemplares/listado");
+		mav.addObject("listaEjemplares", ejeService.getAll());
 		return mav;
 	}
 
 	@RequestMapping(method = RequestMethod.GET, value = "/{id}")
 	public ModelAndView getById(@PathVariable("id") int id) {
-		mav = new ModelAndView("/usuarios/usuario");
-		mav.addObject("usuario", usuService.getById(id));
+		mav = new ModelAndView("/ejemplares/ejemplar");
+		mav.addObject("ejemplar", ejeService.getById(id));
 		return mav;
 	}
 
 	@RequestMapping(method = { RequestMethod.POST, RequestMethod.DELETE }, value = "/{id}")
 	public String delete(@PathVariable("id") int id) {
-		usuService.delete(id);
-		return "redirect:usuarios";
+		ejeService.delete(id);
+		return "redirect:ejemplares";
 	}
 
-	@RequestMapping(value = "/addUsuario", method = RequestMethod.GET)
-	public String addUsuario(Model model) {
-		model.addAttribute("usuario", new Usuario());
-		return "/usuarios/usuario";
+	@RequestMapping(value = "/addEjemplar", method = RequestMethod.GET)
+	public String addEjemplar(Model model) {
+		model.addAttribute("ejemplar", new Ejemplar());
+		return "/ejemplares/ejemplar";
 	}
 
 	@RequestMapping(value = "/save", method = RequestMethod.POST)
-	public String saveUsuario(@ModelAttribute("usuario") @Validated Usuario usuario, BindingResult bindingResult, Model model) {
+	public String saveEjemplar(@ModelAttribute("ejemplar") @Validated Ejemplar ejemplar, BindingResult bindingResult, Model model) {
 		String destino = "";
 
 		if (bindingResult.hasErrors()) {
-			logger.info("El usuario tiene errores");
-			destino = "/usuarios/usuario";
+			logger.info("El ejemplar tiene errores");
+			destino = "/ejemplares/ejemplar";
 		} else {
-			logger.info("usuario correcto");
-			destino = "/usuarios/usuario";
-			if (usuario.getCodigo() > 0) {
-				usuService.update(usuario);
+			logger.info("ejemplar correcto");
+			destino = "redirect:/ejemplares";
+			if (ejemplar.getCodigo() > 0) {
+				ejeService.update(ejemplar);
 			} else {
-				usuService.create(usuario);
+				ejeService.create(ejemplar);
 			}
 		}
 		return destino;
@@ -90,6 +87,6 @@ public class UsuariosController extends MultiActionController {
 
 	@RequestMapping(value = "/restclients", method = RequestMethod.GET)
 	public String restRedirect(Model model) {
-		return "/usuarios/listado_rest";
+		return "/ejemplares/listado_rest";
 	}
 }

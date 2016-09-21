@@ -3,16 +3,17 @@ package com.ipartek.formacion.service;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 
 import com.ipartek.formacion.dao.UsuarioDAOImp;
 import com.ipartek.formacion.dao.interfaces.UsuarioDAO;
 import com.ipartek.formacion.dao.persistence.Usuario;
 import com.ipartek.formacion.service.interfaces.UsuarioService;
-
+@Service
 public class UsuariosServiceImp implements UsuarioService {
 
 	@Autowired
-	private UsuarioDAO usuDAO = null;
+	private UsuarioDAO usuDAO;
 
 	public List<Usuario> getAll() {
 		return usuDAO.getAll();

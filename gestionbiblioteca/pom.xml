@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
 	<modelVersion>4.0.0</modelVersion>
-	<groupId>com.ipartek</groupId>
-	<artifactId>artifactId</artifactId>
+	<groupId>com.ipartek.formacion</groupId>
+	<artifactId>gestionbiblioteca</artifactId>
 	<name>name</name>
 	<packaging>war</packaging>
 	<version>1.0.0-BUILD-SNAPSHOT</version>
@@ -17,7 +17,7 @@
 		<spring-ws>2.3.0.RELEASE</spring-ws>
 		<jaxb-api>2.2.12</jaxb-api>
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-		<cxf.version>3.0.2</cxf.version>
+		<cxf.version>3.0.4</cxf.version>
 		<cxf.scope>compile</cxf.scope>
 	</properties>
 	<dependencies>
@@ -237,31 +237,6 @@
 				<configuration>
 					<mainClass>org.test.int1.Main</mainClass>
 				</configuration>
-			</plugin>
-			<plugin>
-				<groupId>org.apache.cxf</groupId>
-				<artifactId>cxf-java2ws-plugin</artifactId>
-				<version>${cxf.version}</version>
-				<executions>
-					<execution>
-						<id>process-classes</id>
-						<phase>process-classes</phase>
-						<configuration>
-							<!-- service endpoint interface or class -->
-							<className>com.ipartek.formacion.soapservers.CursoServiceSOAP</className>
-							<!-- location where wsdl file will be generated -->
-							<outputFile>${project.basedir}/src/main/resources/wsdl/CursoService.wsdl</outputFile>
-							<genWsdl>true</genWsdl>
-							<verbose>true</verbose>
-							<!-- mention service address otherwise it will generate default URL -->
-							<!-- pattern : http://<host>:<port>/<project artifactId will be used as context-path here or you may have different context path>/<service end point> -->
-							<address>http://localhost:8080/${project.artifactId}/services/cursoService</address>
-						</configuration>
-						<goals>
-							<goal>java2ws</goal>
-						</goals>
-					</execution>
-				</executions>
 			</plugin>
 		</plugins>
 		<pluginManagement>
