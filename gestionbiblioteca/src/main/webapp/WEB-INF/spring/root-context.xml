@@ -10,16 +10,13 @@
 		<property name="url" value="${mysql.url}" />
 		<property name="username" value="${mysql.user}" />
 		<property name="password" value="${mysql.pass}" />
-		
 	</bean>
 	<bean id="usuarioDAOImp" class="com.ipartek.formacion.dao.UsuarioDAOImp">
 		<property name="dataSource" ref="mysqlDataSource" />
 	</bean>
-
 	<bean id="libroDAOImp" class="com.ipartek.formacion.dao.LibroDAOImp">
 		<property name="dataSource" ref="mysqlDataSource" />
 	</bean>
-	
 	<bean id="ejemplarDAOImp" class="com.ipartek.formacion.dao.EjemplarDAOImp">
 		<property name="dataSource" ref="mysqlDataSource" />
 	</bean>

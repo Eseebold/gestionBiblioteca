@@ -14,15 +14,16 @@ import com.ipartek.formacion.dao.persistence.Usuario;
  */
 public class UsuarioMapper implements RowMapper<Usuario> {
 
+	@Override
 	public Usuario mapRow(ResultSet rs, int arg1) throws SQLException {
 		Usuario usuario = new Usuario();
 		usuario.setCodigo(rs.getInt("codigo"));
 		usuario.setNombre(rs.getString("nombre"));
 		usuario.setApellidos(rs.getString("apellidos"));
-		usuario.setFnacimiento(rs.getDate("fNacimiento"));
+		usuario.setFnacimiento(rs.getDate("fnacimiento"));
 		usuario.setEmail(rs.getString("email"));
-		return usuario;
 
+		return usuario;
 	}
 
 }

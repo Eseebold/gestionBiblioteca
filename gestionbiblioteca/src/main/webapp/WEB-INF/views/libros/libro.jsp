@@ -10,34 +10,25 @@
 				<form:hidden path="codigo" />
 			</c:if>
 			<div class="form-group">
-				<form:label path="nombre">
-					<spring:message code="libro.nombre" />:
+				<form:label path="titulo">
+					<spring:message code="libro.titulo" />:
 				</form:label>
-				<form:input path="nombre" cssClass="form-control" cssErrorClass="" />
-				<form:errors cssClass="text-danger" path="nombre" />
+				<form:input path="titulo" cssClass="form-control" cssErrorClass="" />
+				<form:errors cssClass="text-danger" path="titulo" />
 			</div>
 			<div class="form-group">
-				<form:label path="apellidos">
-					<spring:message code="libro.apellidos" />:
+				<form:label path="autor">
+					<spring:message code="libro.autor" />:
 				</form:label>
-				<form:input path="apellidos" cssClass="form-control" cssErrorClass="" />
-				<form:errors cssClass="text-danger" path="apellidos" />
+				<form:input path="autor" cssClass="form-control" cssErrorClass="" />
+				<form:errors cssClass="text-danger" path="autor" />
 			</div>
 			<div class="form-group">
-				<form:label path="fNacimiento">
-					<spring:message code="libro.fNacimiento" />:
+				<form:label path="isbn">
+					<spring:message code="libro.isbn" />:
 				</form:label>
-				<form:input path="fNacimiento" placeholder="dd/MM/yyyy"
-					cssClass="form-control" cssErrorClass=""
-					pattern="[0-9]{2}/[0-9]{2}/[0-9]{4}" />
-				<form:errors cssClass="text-danger" path="fNacimiento" />
-			</div>
-			<div class="form-group">
-				<form:label path="email">
-					<spring:message code="libro.email" />:
-				</form:label>
-				<form:input path="email" cssClass="form-control" cssErrorClass="" />
-				<form:errors cssClass="text-danger" path="email" />
+				<form:input path="isbn" cssClass="form-control" cssErrorClass="" />
+				<form:errors cssClass="text-danger" path="isbn" />
 			</div>
 			<div class="form-group">
 				<a href="<c:url value='/libros'/>" class="btn btn-danger">ATRAS</a>

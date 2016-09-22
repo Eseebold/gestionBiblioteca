@@ -19,7 +19,7 @@
 						<c:forEach items="${listaLibros }" var="libro">
 							<tr>
 								<td>${libro.codigo }</td>
-								<td>${libro.titulo },${libro.autor }</td>
+								<td>${libro.titulo }, ${libro.autor }</td>
 								<td><a href="<c:url value='/libros/${libro.codigo }'/>"
 									class="btn btn-warning"><i
 										class="glyphicon glyphicon-pencil"></i></a></td>

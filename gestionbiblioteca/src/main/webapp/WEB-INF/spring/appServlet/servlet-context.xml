@@ -28,9 +28,9 @@
 
 
 	<beans:bean id="usuarioValidator" class="com.ipartek.formacion.controller.validator.UsuarioValidator"></beans:bean>
-	
+
 	<beans:bean id="libroValidator" class="com.ipartek.formacion.controller.validator.LibroValidator"></beans:bean>
-	
+
 	<beans:bean id="ejemplarValidator" class="com.ipartek.formacion.controller.validator.EjemplarValidator"></beans:bean>
 
 	<beans:bean id="messageSource" class="org.springframework.context.support.ReloadableResourceBundleMessageSource">

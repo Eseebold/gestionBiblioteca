@@ -19,7 +19,7 @@
 						<c:forEach items="${listaUsuarios }" var="usuario">
 							<tr>
 								<td>${usuario.codigo }</td>
-								<td>${usuario.nombre },${usuario.apellido }</td>
+								<td>${usuario.nombre }, ${usuario.apellidos }</td>
 								<td><a href="<c:url value='/usuarios/${usuario.codigo }'/>"
 									class="btn btn-warning"><i
 										class="glyphicon glyphicon-pencil"></i></a></td>

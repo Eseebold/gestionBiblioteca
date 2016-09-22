@@ -10,6 +10,7 @@ import javax.sql.DataSource;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.core.NestedRuntimeException;
 import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.core.namedparam.MapSqlParameterSource;
@@ -27,7 +28,7 @@ import com.ipartek.formacion.dao.persistence.Usuario;
  *
  */
 @Repository("usuarioDAOImp")
-public class UsuarioDAOImp implements UsuarioDAO {
+public class UsuarioDAOImp implements UsuarioDAO { 	
 
 	private static final Logger logger = LoggerFactory.getLogger(UsuarioDAOImp.class);
 
@@ -36,30 +37,26 @@ public class UsuarioDAOImp implements UsuarioDAO {
 	private JdbcTemplate jdbctemplate;
 	private SimpleJdbcCall jdbcCall;
 
-	public void setDataSource(DataSource dataSource) {
-		this.dataSource = dataSource;
-		this.jdbctemplate = new JdbcTemplate(dataSource);
-		this.jdbcCall = new SimpleJdbcCall(dataSource);
-	}
-
+	@Override
 	public List<Usuario> getAll() {
 		List<Usuario> usuarios = new ArrayList<Usuario>();
-		final String SQL = "SELECT codigo, nombre, apellidos, fNacimiento, email FROM usuario;";
+		final String SQL = "SELECT codigo, nombre, apellidos, fnacimiento, email FROM usuario;";
+
 		try {
 			usuarios = jdbctemplate.query(SQL, new UsuarioMapper());
-		} catch (EmptyResultDataAccessException e) {
+			} catch (EmptyResultDataAccessException e) {
 			usuarios = new ArrayList<Usuario>();
-			logger.info("EmptyResultDataAccessException");
+			logger.info(e.getMessage() + " EmptyResultDataAccessException");
 		} catch (Exception e) {
-			logger.error(e.getMessage()+"Exception");
+			logger.error(e.getMessage() + " Exception");
 		}
 		logger.info("GetAll ejecutado");
 		return usuarios;
 	}
-
+	@Override
 	public Usuario getById(int id) {
 		Usuario usuario = null;
-		final String SQL = "SELECT codigo, nombre, apellidos, fNacimiento, email FROM usuario WHERE codigo = ?;";
+		final String SQL = "SELECT codigo, nombre, apellidos, fnacimiento, email FROM usuario WHERE codigo = ?;";
 		try {
 			usuario = jdbctemplate.queryForObject(SQL, new Object[] { id }, new UsuarioMapper());
 		} catch (EmptyResultDataAccessException e) {
@@ -70,7 +67,7 @@ public class UsuarioDAOImp implements UsuarioDAO {
 		logger.info("GetById ejecutado");
 		return usuario;
 	}
-
+	@Override
 	public Usuario create(Usuario usuario) {
 		/*
 		 * createUsuario --> Nombre del procedimiento almacenado
@@ -81,7 +78,7 @@ public class UsuarioDAOImp implements UsuarioDAO {
 		 * el procedimiento
 		 */
 		SqlParameterSource in = new MapSqlParameterSource().addValue("nombre", usuario.getNombre()).addValue("apellidos", usuario.getApellidos())
-				.addValue("fecha", new Date(usuario.getFnacimiento().getTime())).addValue("email", usuario.getEmail());
+				.addValue("fnacimiento", new Date(usuario.getFnacimiento().getTime())).addValue("email", usuario.getEmail());
 
 		Map<String, Object> out = jdbcCall.execute(in);
 		/*
@@ -91,19 +88,27 @@ public class UsuarioDAOImp implements UsuarioDAO {
 		logger.info("create ejecutado");
 		return usuario;
 	}
-
+	@Override
 	public Usuario update(Usuario usuario) {
-		final String SQL = "UPDATE usuario SET nombre = ?, apellidos = ?, fNacimiento = ?, email = ?  WHERE codigo = ?;";
+		final String SQL = "UPDATE usuario SET nombre = ?, apellidos = ?, fnacimiento = ?, email = ?  WHERE codigo = ?;";
 		jdbctemplate.update(SQL, new Object[] { usuario.getNombre(), usuario.getApellidos(), usuario.getFnacimiento(), usuario.getEmail(), usuario.getCodigo() });
 		logger.info("update ejecutado");
 		return usuario;
 
 	}
-
+	@Override
 	public void delete(int id) {
 		final String SQL = "DELETE FROM usuario WHERE codigo = ?;";
 		jdbctemplate.update(SQL, new Object[] { id });
 		logger.info("delete ejecutado");
+	}
+	
+	@Autowired
+	@Override
+	public void setDataSource(DataSource dataSource) {
+		this.dataSource = dataSource;
+		this.jdbctemplate = new JdbcTemplate(dataSource);
+		this.jdbcCall = new SimpleJdbcCall(dataSource);
 	}
 
 }

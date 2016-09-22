@@ -36,12 +36,7 @@ public class LibroDAOImp implements LibroDAO {
 	private JdbcTemplate jdbctemplate;
 	private SimpleJdbcCall jdbcCall;
 
-	public void setDataSource(DataSource dataSource) {
-		this.dataSource = dataSource;
-		this.jdbctemplate = new JdbcTemplate(dataSource);
-		this.jdbcCall = new SimpleJdbcCall(dataSource);
-	}
-
+	@Override
 	public List<Libro> getAll() {
 		List<Libro> libros = new ArrayList<Libro>();
 		final String SQL = "SELECT codigo, titulo, autor, isbn FROM libro;";
@@ -49,13 +44,15 @@ public class LibroDAOImp implements LibroDAO {
 			libros = jdbctemplate.query(SQL, new LibroMapper());
 		} catch (EmptyResultDataAccessException e) {
 			libros = new ArrayList<Libro>();
+			logger.info("EmptyResultDataAccessException");
 		} catch (Exception e) {
-			logger.error(e.getMessage());
+			logger.error(e.getMessage() + " Exception");
 		}
 		logger.info("GetAll ejecutado");
 		return libros;
 	}
 
+	@Override
 	public Libro getById(int id) {
 		Libro libro = null;
 		final String SQL = "SELECT codigo, titulo, autor, isbn FROM libro WHERE codigo = ?;";
@@ -70,6 +67,7 @@ public class LibroDAOImp implements LibroDAO {
 		return libro;
 	}
 
+	@Override
 	public Libro create(Libro libro) {
 		/*
 		 * createUsuario --> Nombre del procedimiento almacenado
@@ -79,8 +77,7 @@ public class LibroDAOImp implements LibroDAO {
 		 * SqlParameterSource (tipo Map) guarda los paramentros necesarios para
 		 * el procedimiento
 		 */
-		SqlParameterSource in = new MapSqlParameterSource().addValue("titulo", libro.getTitulo()).addValue("autor", libro.getAutor())
-				.addValue("isbn", libro.getIsbn());
+		SqlParameterSource in = new MapSqlParameterSource().addValue("titulo", libro.getTitulo()).addValue("autor", libro.getAutor()).addValue("isbn", libro.getIsbn());
 
 		Map<String, Object> out = jdbcCall.execute(in);
 		/*
@@ -91,6 +88,7 @@ public class LibroDAOImp implements LibroDAO {
 		return libro;
 	}
 
+	@Override
 	public Libro update(Libro libro) {
 		final String SQL = "UPDATE libro SET titulo = ?, autor = ?, isbn = ?  WHERE codigo = ?;";
 		jdbctemplate.update(SQL, new Object[] { libro.getTitulo(), libro.getAutor(), libro.getIsbn(), libro.getCodigo() });
@@ -99,10 +97,18 @@ public class LibroDAOImp implements LibroDAO {
 
 	}
 
+	@Override
 	public void delete(int id) {
 		final String SQL = "DELETE FROM libro WHERE codigo = ?;";
 		jdbctemplate.update(SQL, new Object[] { id });
 		logger.info("delete ejecutado");
 	}
 
+	@Autowired
+	@Override
+	public void setDataSource(DataSource dataSource) {
+		this.dataSource = dataSource;
+		this.jdbctemplate = new JdbcTemplate(dataSource);
+		this.jdbcCall = new SimpleJdbcCall(dataSource);
+	}
 }

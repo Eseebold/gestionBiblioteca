@@ -36,12 +36,7 @@ public class EjemplarDAOImp implements EjemplarDAO {
 	private JdbcTemplate jdbctemplate;
 	private SimpleJdbcCall jdbcCall;
 
-	public void setDataSource(DataSource dataSource) {
-		this.dataSource = dataSource;
-		this.jdbctemplate = new JdbcTemplate(dataSource);
-		this.jdbcCall = new SimpleJdbcCall(dataSource);
-	}
-
+	@Override
 	public List<Ejemplar> getAll() {
 		List<Ejemplar> ejemplares = new ArrayList<Ejemplar>();
 		final String SQL = "SELECT codigo, editorial, paginas FROM ejemplar;";
@@ -56,6 +51,7 @@ public class EjemplarDAOImp implements EjemplarDAO {
 		return ejemplares;
 	}
 
+	@Override
 	public Ejemplar getById(int id) {
 		Ejemplar ejemplar = null;
 		final String SQL = "SELECT codigo, editorial, paginas FROM ejemplar WHERE codigo = ?;";
@@ -70,6 +66,7 @@ public class EjemplarDAOImp implements EjemplarDAO {
 		return ejemplar;
 	}
 
+	@Override
 	public Ejemplar create(Ejemplar ejemplar) {
 		/*
 		 * createUsuario --> Nombre del procedimiento almacenado
@@ -90,6 +87,7 @@ public class EjemplarDAOImp implements EjemplarDAO {
 		return ejemplar;
 	}
 
+	@Override
 	public Ejemplar update(Ejemplar ejemplar) {
 		final String SQL = "UPDATE libro SET editorial = ?, paginas = ?  WHERE codigo = ?;";
 		jdbctemplate.update(SQL, new Object[] { ejemplar.getEditorial(), ejemplar.getPaginas() });
@@ -98,10 +96,19 @@ public class EjemplarDAOImp implements EjemplarDAO {
 
 	}
 
+	@Override
 	public void delete(int id) {
 		final String SQL = "DELETE FROM libro WHERE codigo = ?;";
 		jdbctemplate.update(SQL, new Object[] { id });
 		logger.info("delete ejecutado");
+	}
+
+	@Autowired
+	@Override
+	public void setDataSource(DataSource dataSource) {
+		this.dataSource = dataSource;
+		this.jdbctemplate = new JdbcTemplate(dataSource);
+		this.jdbcCall = new SimpleJdbcCall(dataSource);
 	}
 
 }

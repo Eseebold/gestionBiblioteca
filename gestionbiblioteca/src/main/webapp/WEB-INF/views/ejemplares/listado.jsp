@@ -18,13 +18,13 @@
 					<c:when test="${not empty listaUsuarios}">
 						<c:forEach items="${listaUsuarios }" var="usuario">
 							<tr>
-								<td>${usuario.codigo }</td>
-								<td>${usuario.nombre },${usuario.apellido }</td>
+								<td>${ejemplar.codigo }</td>
+								<td>${ejemplar.titulo }, ${ejemplar.editorial }</td>
 								<td><a href="<c:url value='/usuarios/${usuario.codigo }'/>"
 									class="btn btn-warning"><i
 										class="glyphicon glyphicon-pencil"></i></a></td>
 								<td><form method="POST"
-										action="<c:url value='/usuarios/${usuario.codigo }'/>">
+										action="<c:url value='/usuarios/${ejemplar.codigo }'/>">
 										<button type="submit" class="btn btn-danger">
 											<i class="glyphicon glyphicon-remove"></i>
 										</button>

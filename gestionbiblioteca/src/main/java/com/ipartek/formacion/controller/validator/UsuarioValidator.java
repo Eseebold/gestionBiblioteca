@@ -52,7 +52,7 @@ public class UsuarioValidator implements Validator {
 		fActual.set(Calendar.MILLISECOND, 0);
 
 		if (fIntroducida.compareTo(fActual) >= 0) {
-			errors.rejectValue("fNacimiento", "fechaInvalida", new Object[] { "'fNacimiento'" }, "La fecha debe ser anterior al dia de hoy");
+			errors.rejectValue("fnacimiento", "fechaInvalida", new Object[] { "'fnacimiento'" }, "La fecha debe ser anterior al dia de hoy");
 		}
 		// ########## Metodo para ver si el email tiene formato valido
 		if (!usu.getEmail().matches("[0-9a-zA-Z\\.]+@[a-zA-Z]+.[a-zA-Z]{1,3}")) {
