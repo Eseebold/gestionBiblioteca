@@ -60,7 +60,7 @@ public class UsuariosController extends MultiActionController {
 	@RequestMapping(method = { RequestMethod.POST, RequestMethod.DELETE }, value = "/{id}")
 	public String delete(@PathVariable("id") int id) {
 		usuService.delete(id);
-		return "redirect:usuarios";
+		return "redirect:../usuarios";
 	}
 
 	@RequestMapping(value = "/addUsuario", method = RequestMethod.GET)
@@ -78,7 +78,7 @@ public class UsuariosController extends MultiActionController {
 			destino = "/usuarios/usuario";
 		} else {
 			logger.info("usuario correcto");
-			destino = "/usuarios/usuario";
+			destino = "redirect:/usuarios";
 			if (usuario.getCodigo() > 0) {
 				usuService.update(usuario);
 			} else {

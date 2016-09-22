@@ -8,23 +8,23 @@
 			<thead>
 				<tr>
 					<th>CODIGO</th>
-					<th>NOMBRE Y APELLIDOS</th>
+					<th>EDITORIAL</th>
 					<th>EDITAR</th>
 					<th>ELIMINAR</th>
 				</tr>
 			</thead>
 			<tbody>
 				<c:choose>
-					<c:when test="${not empty listaUsuarios}">
-						<c:forEach items="${listaUsuarios }" var="usuario">
+					<c:when test="${not empty listaEjemplares}">
+						<c:forEach items="${listaEjemplares }" var="ejemplar">
 							<tr>
 								<td>${ejemplar.codigo }</td>
-								<td>${ejemplar.titulo }, ${ejemplar.editorial }</td>
-								<td><a href="<c:url value='/usuarios/${usuario.codigo }'/>"
+								<td>${ejemplar.editorial }</td>
+								<td><a href="<c:url value='/ejemplares/${ejemplar.codigo }'/>"
 									class="btn btn-warning"><i
 										class="glyphicon glyphicon-pencil"></i></a></td>
 								<td><form method="POST"
-										action="<c:url value='/usuarios/${ejemplar.codigo }'/>">
+										action="<c:url value='/ejemplares/${ejemplar.codigo }'/>">
 										<button type="submit" class="btn btn-danger">
 											<i class="glyphicon glyphicon-remove"></i>
 										</button>
@@ -34,12 +34,12 @@
 					</c:when>
 					<c:otherwise>
 						<tr>
-							<td colspan="2">No se ha encontrado ningun usuario en la
+							<td colspan="2">No se ha encontrado ningun ejemplar en la
 								BBDD.</td>
 						</tr>
 					</c:otherwise>
 				</c:choose>
-				<tr><td colspan="4"><a href="<c:url value='/usuarios/addUsuario'/>" class="btn btn-success">Añadir</a></td></tr>
+				<tr><td colspan="4"><a href="<c:url value='/ejemplares/addEjemplar'/>" class="btn btn-success">Añadir</a></td></tr>
 			</tbody>
 		</table>
 	</div>

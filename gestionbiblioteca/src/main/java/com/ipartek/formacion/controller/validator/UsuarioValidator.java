@@ -29,7 +29,7 @@ public class UsuarioValidator implements Validator {
 		Usuario usu = (Usuario) obj;
 
 		// ########## Metodo para ver si el codigo es 1 o superior
-		if (usu.getCodigo() < 1) {
+		if (usu.getCodigo() < 0) {
 			errors.rejectValue("codigo", "codigoNulo", new Object[] { "'codigo'" }, "No puede ser ese valor");
 		}
 

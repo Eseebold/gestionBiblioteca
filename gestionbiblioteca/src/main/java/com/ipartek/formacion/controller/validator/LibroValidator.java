@@ -18,14 +18,14 @@ public class LibroValidator implements Validator {
 
 	public void validate(Object obj, Errors errors) {
 		// ########## Metodo para ver si los siguientes campos estan o no vacios
-		ValidationUtils.rejectIfEmpty(errors, "titulo", "tituloRequest", "�El usuario carece de nombre? �Podria bautizarte como Poncho?");
-		ValidationUtils.rejectIfEmpty(errors, "nombre", "nombreRequest", "nombre no puede estar vacio");
+		ValidationUtils.rejectIfEmpty(errors, "titulo", "tituloRequest", "inserte requerido");
+		ValidationUtils.rejectIfEmpty(errors, "autor", "nombreRequest", "autor requerido");
 		ValidationUtils.rejectIfEmpty(errors, "isbn", "isbnRequeridos", "isbn requerido");
 
 		Libro lib = (Libro) obj;
 
 		// ########## Metodo para ver si el codigo es 1 o superior
-		if (lib.getCodigo() < 1) {
+		if (lib.getCodigo() < 0) {
 			errors.rejectValue("codigo", "codigoNulo", new Object[] { "'codigo'" }, "No puede ser ese valor");
 		}
 

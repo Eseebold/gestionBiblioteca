@@ -39,7 +39,7 @@ public class EjemplarDAOImp implements EjemplarDAO {
 	@Override
 	public List<Ejemplar> getAll() {
 		List<Ejemplar> ejemplares = new ArrayList<Ejemplar>();
-		final String SQL = "SELECT codigo, editorial, paginas FROM ejemplar;";
+		final String SQL = "SELECT codigo, editorial, paginas FROM ejemplar WHERE codigo > 0;";
 		try {
 			ejemplares = jdbctemplate.query(SQL, new EjemplarMapper());
 		} catch (EmptyResultDataAccessException e) {

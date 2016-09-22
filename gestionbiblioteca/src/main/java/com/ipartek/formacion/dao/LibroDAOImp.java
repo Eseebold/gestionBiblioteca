@@ -39,7 +39,7 @@ public class LibroDAOImp implements LibroDAO {
 	@Override
 	public List<Libro> getAll() {
 		List<Libro> libros = new ArrayList<Libro>();
-		final String SQL = "SELECT codigo, titulo, autor, isbn FROM libro;";
+		final String SQL = "SELECT codigo, titulo, autor, isbn FROM libro WHERE codigo > 0;";
 		try {
 			libros = jdbctemplate.query(SQL, new LibroMapper());
 		} catch (EmptyResultDataAccessException e) {
@@ -73,16 +73,9 @@ public class LibroDAOImp implements LibroDAO {
 		 * createUsuario --> Nombre del procedimiento almacenado
 		 */
 		jdbcCall.withProcedureName("createLibro");
-		/*
-		 * SqlParameterSource (tipo Map) guarda los paramentros necesarios para
-		 * el procedimiento
-		 */
+	
 		SqlParameterSource in = new MapSqlParameterSource().addValue("titulo", libro.getTitulo()).addValue("autor", libro.getAutor()).addValue("isbn", libro.getIsbn());
-
 		Map<String, Object> out = jdbcCall.execute(in);
-		/*
-		 * Recogemos el parametro OUT del procedimiento
-		 */
 		libro.setCodigo((Integer) out.get("codigo"));
 		logger.info("create ejecutado");
 		return libro;
@@ -101,7 +94,7 @@ public class LibroDAOImp implements LibroDAO {
 	public void delete(int id) {
 		final String SQL = "DELETE FROM libro WHERE codigo = ?;";
 		jdbctemplate.update(SQL, new Object[] { id });
-		logger.info("delete ejecutado");
+		logger.info("delete ejecutado en codigo: "+id);
 	}
 
 	@Autowired

@@ -59,7 +59,7 @@ public class LibrosController extends MultiActionController {
 	@RequestMapping(method = { RequestMethod.POST, RequestMethod.DELETE }, value = "/{id}")
 	public String delete(@PathVariable("id") int id) {
 		libService.delete(id);
-		return "redirect:libros";
+		return "redirect:../libros";
 	}
 
 	@RequestMapping(value = "/addLibro", method = RequestMethod.GET)
@@ -73,6 +73,8 @@ public class LibrosController extends MultiActionController {
 		String destino = "";
 
 		if (bindingResult.hasErrors()) {
+			logger.info("bindingResult libro: "+ bindingResult);
+
 			logger.info("El libro tiene errores");
 			destino = "/libros/libro";
 		} else {

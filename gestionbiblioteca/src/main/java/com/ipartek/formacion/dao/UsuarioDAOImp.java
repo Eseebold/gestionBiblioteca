@@ -40,7 +40,7 @@ public class UsuarioDAOImp implements UsuarioDAO {
 	@Override
 	public List<Usuario> getAll() {
 		List<Usuario> usuarios = new ArrayList<Usuario>();
-		final String SQL = "SELECT codigo, nombre, apellidos, fnacimiento, email FROM usuario;";
+		final String SQL = "SELECT codigo, nombre, apellidos, fnacimiento, email FROM usuario WHERE codigo > 0;";
 
 		try {
 			usuarios = jdbctemplate.query(SQL, new UsuarioMapper());
