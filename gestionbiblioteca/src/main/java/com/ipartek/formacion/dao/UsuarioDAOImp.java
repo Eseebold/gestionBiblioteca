@@ -10,7 +10,6 @@ import javax.sql.DataSource;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.core.NestedRuntimeException;
 import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.core.namedparam.MapSqlParameterSource;
@@ -39,20 +38,18 @@ public class UsuarioDAOImp implements UsuarioDAO {
 
 	@Override
 	public List<Usuario> getAll() {
-		List<Usuario> usuarios = new ArrayList<Usuario>();
-		final String SQL = "SELECT codigo, nombre, apellidos, fnacimiento, email FROM usuario WHERE codigo > 0;";
+		List<Usuario> usuarios = null;
+		this.jdbcCall = new SimpleJdbcCall(dataSource).
+				withProcedureName("getAllUsuario").
+				returningResultSet("usuarios", new UsuarioMapper());
+		SqlParameterSource in = new MapSqlParameterSource();
+		Map<String, Object> out = jdbcCall.execute(in);
+		usuarios = (List) out.get("usuarios");
 
-		try {
-			usuarios = jdbctemplate.query(SQL, new UsuarioMapper());
-			} catch (EmptyResultDataAccessException e) {
-			usuarios = new ArrayList<Usuario>();
-			logger.info(e.getMessage() + " EmptyResultDataAccessException");
-		} catch (Exception e) {
-			logger.error(e.getMessage() + " Exception");
-		}
-		logger.info("GetAll ejecutado");
 		return usuarios;
 	}
+	
+	
 	@Override
 	public Usuario getById(int id) {
 		Usuario usuario = null;

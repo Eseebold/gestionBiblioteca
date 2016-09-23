@@ -10,6 +10,7 @@ public class Libro {
 	private int codigo;
 	private String titulo;
 	private String autor;
+	private int disponibles;
 	private String isbn;
 
 	public Libro() {
@@ -51,6 +52,14 @@ public class Libro {
 
 	public void setIsbn(String isbn) {
 		this.isbn = isbn;
+	}
+
+	public int getDisponibles() {
+		return disponibles;
+	}
+
+	public void setDisponibles(int disponibles) {
+		this.disponibles = disponibles;
 	}
 
 }

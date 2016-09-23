@@ -38,32 +38,28 @@ public class LibroDAOImp implements LibroDAO {
 
 	@Override
 	public List<Libro> getAll() {
-		List<Libro> libros = new ArrayList<Libro>();
-		final String SQL = "SELECT codigo, titulo, autor, isbn FROM libro WHERE codigo > 0;";
-		try {
-			libros = jdbctemplate.query(SQL, new LibroMapper());
-		} catch (EmptyResultDataAccessException e) {
-			libros = new ArrayList<Libro>();
-			logger.info("EmptyResultDataAccessException");
-		} catch (Exception e) {
-			logger.error(e.getMessage() + " Exception");
-		}
-		logger.info("GetAll ejecutado");
+		List<Libro> libros = null;
+		this.jdbcCall = new SimpleJdbcCall(dataSource).
+				withProcedureName("getAllLibro").
+				returningResultSet("libros", new LibroMapper());
+		SqlParameterSource in = new MapSqlParameterSource();
+		Map<String, Object> out = jdbcCall.execute(in);
+		libros = (List) out.get("libros");
+
 		return libros;
 	}
 
 	@Override
-	public Libro getById(int id) {
-		Libro libro = null;
-		final String SQL = "SELECT codigo, titulo, autor, isbn FROM libro WHERE codigo = ?;";
-		try {
-			libro = jdbctemplate.queryForObject(SQL, new Object[] { id }, new LibroMapper());
-		} catch (EmptyResultDataAccessException e) {
-			libro = new Libro();
-		} catch (Exception e) {
-			logger.error(e.getMessage());
-		}
-		logger.info("GetById ejecutado");
+	public Libro getById(int codigo) {
+		Libro libro = new Libro();
+		this.jdbcCall = new SimpleJdbcCall(dataSource).withProcedureName("getByIdLibro");
+		libro.setCodigo(codigo);
+		SqlParameterSource in = new MapSqlParameterSource().addValue("codigo", libro.getCodigo());
+		Map<String, Object> out = jdbcCall.execute(in);
+		libro.setTitulo((String) out.get("titulo"));
+		libro.setAutor((String) out.get("autor"));
+		libro.setIsbn((String) out.get("isbn"));
+
 		return libro;
 	}
 
@@ -73,7 +69,7 @@ public class LibroDAOImp implements LibroDAO {
 		 * createUsuario --> Nombre del procedimiento almacenado
 		 */
 		jdbcCall.withProcedureName("createLibro");
-	
+
 		SqlParameterSource in = new MapSqlParameterSource().addValue("titulo", libro.getTitulo()).addValue("autor", libro.getAutor()).addValue("isbn", libro.getIsbn());
 		Map<String, Object> out = jdbcCall.execute(in);
 		libro.setCodigo((Integer) out.get("codigo"));
@@ -81,20 +77,19 @@ public class LibroDAOImp implements LibroDAO {
 		return libro;
 	}
 
-	@Override
 	public Libro update(Libro libro) {
-		final String SQL = "UPDATE libro SET titulo = ?, autor = ?, isbn = ?  WHERE codigo = ?;";
-		jdbctemplate.update(SQL, new Object[] { libro.getTitulo(), libro.getAutor(), libro.getIsbn(), libro.getCodigo() });
-		logger.info("update ejecutado");
+		this.jdbcCall = new SimpleJdbcCall(dataSource).withProcedureName("updateLibro");
+		SqlParameterSource in = new MapSqlParameterSource().addValue("codigo", libro.getCodigo()).addValue("titulo", libro.getTitulo()).addValue("autor", libro.getAutor()).addValue("isbn", libro.getIsbn());
+		Map<String, Object> out = jdbcCall.execute(in);
 		return libro;
-
 	}
 
 	@Override
-	public void delete(int id) {
-		final String SQL = "DELETE FROM libro WHERE codigo = ?;";
-		jdbctemplate.update(SQL, new Object[] { id });
-		logger.info("delete ejecutado en codigo: "+id);
+	public void delete(int codigo) {
+		this.jdbcCall = new SimpleJdbcCall(dataSource).withProcedureName("deleteLibro");
+		SqlParameterSource in = new MapSqlParameterSource().addValue("codigo", codigo);
+		Map<String, Object> out = jdbcCall.execute(in);
+
 	}
 
 	@Autowired
@@ -104,4 +99,5 @@ public class LibroDAOImp implements LibroDAO {
 		this.jdbctemplate = new JdbcTemplate(dataSource);
 		this.jdbcCall = new SimpleJdbcCall(dataSource);
 	}
+
 }

@@ -8,6 +8,7 @@ package com.ipartek.formacion.dao.persistence;
 public class Ejemplar {
 
 	private int codigo;
+	private String titulo;
 	private String editorial;
 	private int paginas;
 
@@ -41,6 +42,14 @@ public class Ejemplar {
 
 	public void setPaginas(int paginas) {
 		this.paginas = paginas;
+	}
+
+	public String getTitulo() {
+		return titulo;
+	}
+
+	public void setTitulo(String titulo) {
+		this.titulo = titulo;
 	}
 
 }

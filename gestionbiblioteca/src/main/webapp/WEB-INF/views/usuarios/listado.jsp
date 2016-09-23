@@ -9,6 +9,7 @@
 				<tr>
 					<th>CODIGO</th>
 					<th>NOMBRE Y APELLIDOS</th>
+					<th>EN POSESION DE:</th>
 					<th>EDITAR</th>
 					<th>ELIMINAR</th>
 				</tr>
@@ -20,6 +21,7 @@
 							<tr>
 								<td>${usuario.codigo }</td>
 								<td>${usuario.nombre }, ${usuario.apellidos }</td>
+								<td>${usuario.codejemplar }</td>
 								<td><a href="<c:url value='/usuarios/${usuario.codigo }'/>"
 									class="btn btn-warning"><i
 										class="glyphicon glyphicon-pencil"></i></a></td>

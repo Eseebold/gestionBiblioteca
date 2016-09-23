@@ -20,6 +20,7 @@ public class LibroMapper implements RowMapper<Libro> {
 		libro.setTitulo(rs.getString("titulo"));
 		libro.setAutor(rs.getString("autor"));
 		libro.setIsbn(rs.getString("isbn"));
+		libro.setDisponibles(rs.getInt("disponibles"));
 		return libro;
 
 	}

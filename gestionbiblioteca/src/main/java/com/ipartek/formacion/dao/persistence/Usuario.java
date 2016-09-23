@@ -1,4 +1,4 @@
-package com.ipartek.formacion.dao.persistence;
+	package com.ipartek.formacion.dao.persistence;
 
 import java.io.Serializable;
 import java.util.Date;
@@ -19,6 +19,8 @@ public class Usuario implements Serializable {
 	private static final long serialVersionUID = 1L;
 	@Min(value = 1)
 	private int codigo;
+	@NotNull
+	private String codejemplar;
 	@NotNull
 	private String nombre;
 	@NotNull
@@ -44,6 +46,14 @@ public class Usuario implements Serializable {
 
 	public void setCodigo(int codigo) {
 		this.codigo = codigo;
+	}
+
+	public String getCodejemplar() {
+		return codejemplar;
+	}
+
+	public void setCodejemplar(String string) {
+		this.codejemplar = string;
 	}
 
 	public String getNombre() {

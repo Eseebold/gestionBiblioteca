@@ -1,7 +1,5 @@
 package com.ipartek.formacion.dao;
 
-import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
 import java.util.Map;
 
@@ -19,6 +17,7 @@ import org.springframework.stereotype.Repository;
 
 import com.ipartek.formacion.dao.interfaces.EjemplarDAO;
 import com.ipartek.formacion.dao.mappers.EjemplarMapper;
+import com.ipartek.formacion.dao.mappers.LibroMapper;
 import com.ipartek.formacion.dao.persistence.Ejemplar;
 
 /**
@@ -38,16 +37,14 @@ public class EjemplarDAOImp implements EjemplarDAO {
 
 	@Override
 	public List<Ejemplar> getAll() {
-		List<Ejemplar> ejemplares = new ArrayList<Ejemplar>();
-		final String SQL = "SELECT codigo, editorial, paginas FROM ejemplar WHERE codigo > 0;";
-		try {
-			ejemplares = jdbctemplate.query(SQL, new EjemplarMapper());
-		} catch (EmptyResultDataAccessException e) {
-			ejemplares = new ArrayList<Ejemplar>();
-		} catch (Exception e) {
-			logger.error(e.getMessage());
-		}
-		logger.info("GetAll ejecutado");
+		List<Ejemplar> ejemplares = null;
+		this.jdbcCall = new SimpleJdbcCall(dataSource).
+				withProcedureName("getAllEjemplar").
+				returningResultSet("ejemplares", new EjemplarMapper());
+		SqlParameterSource in = new MapSqlParameterSource();
+		Map<String, Object> out = jdbcCall.execute(in);
+		ejemplares = (List) out.get("ejemplares");
+
 		return ejemplares;
 	}
 
@@ -89,7 +86,7 @@ public class EjemplarDAOImp implements EjemplarDAO {
 
 	@Override
 	public Ejemplar update(Ejemplar ejemplar) {
-		final String SQL = "UPDATE libro SET editorial = ?, paginas = ?  WHERE codigo = ?;";
+		final String SQL = "UPDATE ejemplar SET editorial = ?, paginas = ?  WHERE codigo = ?;";
 		jdbctemplate.update(SQL, new Object[] { ejemplar.getEditorial(), ejemplar.getPaginas() });
 		logger.info("update ejecutado");
 		return ejemplar;
@@ -98,7 +95,7 @@ public class EjemplarDAOImp implements EjemplarDAO {
 
 	@Override
 	public void delete(int id) {
-		final String SQL = "DELETE FROM libro WHERE codigo = ?;";
+		final String SQL = "DELETE FROM ejemplar WHERE codigo = ?;";
 		jdbctemplate.update(SQL, new Object[] { id });
 		logger.info("delete ejecutado");
 	}

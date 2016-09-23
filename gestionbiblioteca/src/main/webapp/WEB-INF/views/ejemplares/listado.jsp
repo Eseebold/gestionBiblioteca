@@ -8,6 +8,7 @@
 			<thead>
 				<tr>
 					<th>CODIGO</th>
+					<th>TITULO</th>
 					<th>EDITORIAL</th>
 					<th>EDITAR</th>
 					<th>ELIMINAR</th>
@@ -19,6 +20,7 @@
 						<c:forEach items="${listaEjemplares }" var="ejemplar">
 							<tr>
 								<td>${ejemplar.codigo }</td>
+								<td>${ejemplar.titulo }</td>
 								<td>${ejemplar.editorial }</td>
 								<td><a href="<c:url value='/ejemplares/${ejemplar.codigo }'/>"
 									class="btn btn-warning"><i
