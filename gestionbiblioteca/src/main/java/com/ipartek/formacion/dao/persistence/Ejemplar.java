@@ -1,31 +1,54 @@
 package com.ipartek.formacion.dao.persistence;
 
-/**
- * 
- * @author Turbo
- *
- */
-public class Ejemplar {
-
-	private int codigo;
-	private String titulo;
+public class Ejemplar extends Libro {
+	private int codEjemplar;
+	private Usuario usuario;
 	private String editorial;
-	private int paginas;
+	private int nPaginas;
 
-	public Ejemplar() {
+	public Ejemplar(Usuario usuario) {
 		super();
-		setCodigo(0);
+		setUsuario(usuario);
 		setEditorial("");
-		setPaginas(0);
-
+		setnPaginas(0);
 	}
 
-	public int getCodigo() {
-		return codigo;
+	/**
+	 * @return the nPaginas
+	 */
+	public int getnPaginas() {
+		return nPaginas;
 	}
 
-	public void setCodigo(int codigo) {
-		this.codigo = codigo;
+	/**
+	 * @param nPaginas
+	 *            the nPaginas to set
+	 */
+	public void setnPaginas(int nPaginas) {
+		this.nPaginas = nPaginas;
+	}
+
+	public Usuario getUsuario() {
+		return usuario;
+	}
+
+	public void setUsuario(Usuario usuario) {
+		this.usuario = usuario;
+	}
+
+	/**
+	 * @return the codEjemplar
+	 */
+	public int getCodEjemplar() {
+		return codEjemplar;
+	}
+
+	/**
+	 * @param codEjemplar
+	 *            the codEjemplar to set
+	 */
+	public void setCodEjemplar(int codEjemplar) {
+		this.codEjemplar = codEjemplar;
 	}
 
 	public String getEditorial() {
@@ -34,22 +57,6 @@ public class Ejemplar {
 
 	public void setEditorial(String editorial) {
 		this.editorial = editorial;
-	}
-
-	public int getPaginas() {
-		return paginas;
-	}
-
-	public void setPaginas(int paginas) {
-		this.paginas = paginas;
-	}
-
-	public String getTitulo() {
-		return titulo;
-	}
-
-	public void setTitulo(String titulo) {
-		this.titulo = titulo;
 	}
 
 }

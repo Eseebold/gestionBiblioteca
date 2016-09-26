@@ -2,28 +2,17 @@ package com.ipartek.formacion.service.interfaces;
 
 import java.util.List;
 
-import com.ipartek.formacion.dao.EjemplarDAOImp;
 import com.ipartek.formacion.dao.persistence.Ejemplar;
+import com.ipartek.formacion.dao.persistence.Libro;
 
-/**
- * 
- * @author Turbo
- *
- */
-public interface EjemplarService {
-	/**
-	 * 
-	 * @return <code>List<Usuario></code>
-	 */
-	public List<Ejemplar> getAll();
+public interface EjemplarService extends LibroService {
 
-	public Ejemplar getById(int id);
+	public List<Ejemplar> getEjemplares(Libro libro);
 
-	public Ejemplar create(Ejemplar ejemplar);
+	public Ejemplar getEjemplar(int codEjemplar);
+
+	public void eliminar(int codEjemplar);
 
 	public Ejemplar update(Ejemplar ejemplar);
 
-	public void delete(int id);
-
-	public void setEjeDAO(EjemplarDAOImp ejeDAO);
 }

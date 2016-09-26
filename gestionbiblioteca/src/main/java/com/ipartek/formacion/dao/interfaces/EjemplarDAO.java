@@ -3,22 +3,16 @@ package com.ipartek.formacion.dao.interfaces;
 import java.util.List;
 
 import com.ipartek.formacion.dao.persistence.Ejemplar;
+import com.ipartek.formacion.dao.persistence.Libro;
 
-/**
- * 
- * @author Turbo
- *
- */
-public interface EjemplarDAO extends DAOSetter {
+public interface EjemplarDAO extends LibroDAO {
 
-	public List<Ejemplar> getAll();
+	public List<Ejemplar> getEjemplares(Libro libro);
 
-	public Ejemplar getById(int id);
+	public Ejemplar getEjemplar(int codEjemplar);
 
-	public Ejemplar create(Ejemplar ejemplar);
+	public void eliminar(int codLibro);
 
 	public Ejemplar update(Ejemplar ejemplar);
-
-	public void delete(int id);
 
 }

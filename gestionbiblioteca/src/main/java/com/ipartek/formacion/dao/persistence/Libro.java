@@ -1,33 +1,50 @@
 package com.ipartek.formacion.dao.persistence;
 
-/**
- * 
- * @author Turbo
- *
- */
+import java.util.ArrayList;
+import java.util.List;
+
 public class Libro {
 
-	private int codigo;
+	private int codLibro;
 	private String titulo;
 	private String autor;
-	private int disponibles;
+	private List<Ejemplar> ejemplares;
 	private String isbn;
 
 	public Libro() {
 		super();
-		setCodigo(0);
+		setCodLibro(-1);
 		setTitulo("");
 		setAutor("");
 		setIsbn("");
-
+		setEjemplares(new ArrayList<Ejemplar>());
 	}
 
-	public int getCodigo() {
-		return codigo;
+	public void addEjemplar(Ejemplar ejemplar) {
+		this.ejemplares.add(ejemplar);
 	}
 
-	public void setCodigo(int codigo) {
-		this.codigo = codigo;
+	public List<Ejemplar> getEjemplares() {
+		return ejemplares;
+	}
+
+	public void setEjemplares(List<Ejemplar> ejemplares) {
+		this.ejemplares = ejemplares;
+	}
+
+	/**
+	 * @return the codLibro
+	 */
+	public int getCodLibro() {
+		return codLibro;
+	}
+
+	/**
+	 * @param codLibro
+	 *            the codLibro to set
+	 */
+	public void setCodLibro(int codLibro) {
+		this.codLibro = codLibro;
 	}
 
 	public String getTitulo() {
@@ -38,14 +55,6 @@ public class Libro {
 		this.titulo = titulo;
 	}
 
-	public String getAutor() {
-		return autor;
-	}
-
-	public void setAutor(String autor) {
-		this.autor = autor;
-	}
-
 	public String getIsbn() {
 		return isbn;
 	}
@@ -54,12 +63,12 @@ public class Libro {
 		this.isbn = isbn;
 	}
 
-	public int getDisponibles() {
-		return disponibles;
+	public String getAutor() {
+		return autor;
 	}
 
-	public void setDisponibles(int disponibles) {
-		this.disponibles = disponibles;
+	public void setAutor(String autor) {
+		this.autor = autor;
 	}
 
 }

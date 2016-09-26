@@ -6,22 +6,18 @@ import java.sql.SQLException;
 import org.springframework.jdbc.core.RowMapper;
 
 import com.ipartek.formacion.dao.persistence.Ejemplar;
+import com.ipartek.formacion.dao.persistence.Usuario;
 
-/**
- * 
- * @author Turbo
- *
- */
 public class EjemplarMapper implements RowMapper<Ejemplar> {
+	private Usuario usuario;
 
-	public Ejemplar mapRow(ResultSet rs, int arg1) throws SQLException {
-		Ejemplar ejemplar = new Ejemplar();
-		ejemplar.setCodigo(rs.getInt("codigo"));
-		ejemplar.setTitulo(rs.getString("titulo"));
-		ejemplar.setEditorial(rs.getString("editorial"));
-		ejemplar.setPaginas(rs.getInt("paginas"));
+	@Override
+	public Ejemplar mapRow(ResultSet rs, int rowNum) throws SQLException {
+		this.usuario = new Usuario();
+		// TODO recoger parametros de ejemplar, libro y usuario
+		Ejemplar ejemplar = null;
+		ejemplar = new Ejemplar(usuario);
 		return ejemplar;
-
 	}
 
 }

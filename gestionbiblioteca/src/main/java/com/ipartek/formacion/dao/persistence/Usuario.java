@@ -1,83 +1,41 @@
-	package com.ipartek.formacion.dao.persistence;
+package com.ipartek.formacion.dao.persistence;
 
 import java.io.Serializable;
 import java.util.Date;
 
-import javax.validation.constraints.Min;
-import javax.validation.constraints.NotNull;
-import javax.validation.constraints.Past;
-
-/**
- * 
- * @author Turbo
- *
- */
 public class Usuario implements Serializable {
+
 	/**
 	 * 
 	 */
 	private static final long serialVersionUID = 1L;
-	@Min(value = 1)
-	private int codigo;
-	@NotNull
-	private String codejemplar;
-	@NotNull
+	/**
+	 * 
+	 */
+
+	private int codUsuario;
 	private String nombre;
-	@NotNull
 	private String apellidos;
-	@NotNull
-	@Past
-	private Date fnacimiento;
+	private Date fechanacimiento;
 	private String email;
+	private String usernick;
+	private String userpass;
 
 	public Usuario() {
 		super();
-		setCodigo(0);
-		setNombre("");
-		setApellidos("");
-		setFnacimiento(new Date());
+
+		setFechanacimiento(new Date());
 		setEmail("");
-
+		setUserId("");
+		setPassword("");
 	}
 
-	public int getCodigo() {
-		return codigo;
+	public Date getFechanacimiento() {
+		return fechanacimiento;
 	}
 
-	public void setCodigo(int codigo) {
-		this.codigo = codigo;
-	}
-
-	public String getCodejemplar() {
-		return codejemplar;
-	}
-
-	public void setCodejemplar(String string) {
-		this.codejemplar = string;
-	}
-
-	public String getNombre() {
-		return nombre;
-	}
-
-	public void setNombre(String nombre) {
-		this.nombre = nombre;
-	}
-
-	public String getApellidos() {
-		return apellidos;
-	}
-
-	public void setApellidos(String apellidos) {
-		this.apellidos = apellidos;
-	}
-
-	public Date getFnacimiento() {
-		return fnacimiento;
-	}
-
-	public void setFnacimiento(Date fnacimiento) {
-		this.fnacimiento = fnacimiento;
+	public void setFechanacimiento(Date fNacimiento) {
+		this.fechanacimiento = fNacimiento;
 	}
 
 	public String getEmail() {
@@ -86,5 +44,65 @@ public class Usuario implements Serializable {
 
 	public void setEmail(String email) {
 		this.email = email;
+	}
+
+	public String getUserId() {
+		return usernick;
+	}
+
+	public void setUserId(String userId) {
+		this.usernick = userId;
+	}
+
+	public String getPassword() {
+		return userpass;
+	}
+
+	public void setPassword(String password) {
+		this.userpass = password;
+	}
+
+	/**
+	 * @return the nombre
+	 */
+	public String getNombre() {
+		return nombre;
+	}
+
+	/**
+	 * @param nombre
+	 *            the nombre to set
+	 */
+	public void setNombre(String nombre) {
+		this.nombre = nombre;
+	}
+
+	/**
+	 * @return the apellidos
+	 */
+	public String getApellidos() {
+		return apellidos;
+	}
+
+	/**
+	 * @param apellidos
+	 *            the apellidos to set
+	 */
+	public void setApellidos(String apellidos) {
+		this.apellidos = apellidos;
+	}
+
+	/**
+	 * @return the codUsuario
+	 */
+	public int getCodUsuario() {
+		return codUsuario;
+	}
+
+	/**
+	 * @param codUsuario the codUsuario to set
+	 */
+	public void setCodUsuario(int codUsuario) {
+		this.codUsuario = codUsuario;
 	}
 }

@@ -30,14 +30,14 @@ public class UsuarioValidator implements Validator {
 		Usuario usu = (Usuario) obj;
 
 		// ########## Metodo para ver si el codigo es 1 o superior
-		if (usu.getCodigo() < 0) {
+		if (usu.getCodUsuario() < 0) {
 			errors.rejectValue("codigo", "codigoNulo", new Object[] { "'codigo'" }, "No puede ser ese valor");
 		}
 
 		// ########## Metodo para ver si la fecha introducida no es del futuro
 		Calendar fIntroducida = new GregorianCalendar();
 		Calendar fActual = new GregorianCalendar();
-		fIntroducida.setTime(usu.getFnacimiento());
+		fIntroducida.setTime(usu.getFechanacimiento());
 		fActual.setTime(new Date());
 
 		fIntroducida.set(Calendar.HOUR, 0);

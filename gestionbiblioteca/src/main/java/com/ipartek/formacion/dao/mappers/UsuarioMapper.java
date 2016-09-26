@@ -7,24 +7,20 @@ import org.springframework.jdbc.core.RowMapper;
 
 import com.ipartek.formacion.dao.persistence.Usuario;
 
-/**
- * 
- * @author Turbo
- *
- */
 public class UsuarioMapper implements RowMapper<Usuario> {
 
 	@Override
-	public Usuario mapRow(ResultSet rs, int arg1) throws SQLException {
-		Usuario usuario = new Usuario();
-		usuario.setCodigo(rs.getInt("codigo"));
-		usuario.setCodejemplar(rs.getString("libro"));
-		usuario.setNombre(rs.getString("nombre"));
-		usuario.setApellidos(rs.getString("apellidos"));
-		usuario.setFnacimiento(rs.getDate("fnacimiento"));
-		usuario.setEmail(rs.getString("email"));
+	public Usuario mapRow(ResultSet rs, int rowNum) throws SQLException {
+		Usuario user = null;
+		user = new Usuario();
+		user.setNombre(rs.getString("usuNombre"));
+		user.setApellidos(rs.getString("usuApellidos"));
+		user.setEmail(rs.getString("usuEmail"));
+		user.setCodUsuario(rs.getInt("usuCodigo"));
+		user.setFechanacimiento(rs.getDate("usuDate"));
+		user.setPassword(rs.getString("usuPassword"));
 
-		return usuario;
+		return user;
 	}
 
 }

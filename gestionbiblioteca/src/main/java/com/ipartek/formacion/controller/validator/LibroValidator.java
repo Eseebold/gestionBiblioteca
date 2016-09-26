@@ -25,7 +25,7 @@ public class LibroValidator implements Validator {
 		Libro lib = (Libro) obj;
 
 		// ########## Metodo para ver si el codigo es 1 o superior
-		if (lib.getCodigo() < 0) {
+		if (lib.getCodLibro() < 0) {
 			errors.rejectValue("codigo", "codigoNulo", new Object[] { "'codigo'" }, "No puede ser ese valor");
 		}
 

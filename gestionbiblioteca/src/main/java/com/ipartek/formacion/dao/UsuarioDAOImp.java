@@ -1,16 +1,11 @@
 package com.ipartek.formacion.dao;
 
-import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
 import java.util.Map;
 
 import javax.sql.DataSource;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.core.namedparam.MapSqlParameterSource;
 import org.springframework.jdbc.core.namedparam.SqlParameterSource;
@@ -21,91 +16,88 @@ import com.ipartek.formacion.dao.interfaces.UsuarioDAO;
 import com.ipartek.formacion.dao.mappers.UsuarioMapper;
 import com.ipartek.formacion.dao.persistence.Usuario;
 
-/**
- * 
- * @author Turbo
- *
- */
 @Repository("usuarioDAOImp")
-public class UsuarioDAOImp implements UsuarioDAO { 	
+public class UsuarioDAOImp implements UsuarioDAO {
 
-	private static final Logger logger = LoggerFactory.getLogger(UsuarioDAOImp.class);
-
+	@SuppressWarnings("unused")
 	@Autowired
 	private DataSource dataSource;
-	private JdbcTemplate jdbctemplate;
 	private SimpleJdbcCall jdbcCall;
+	@SuppressWarnings("unused")
+	private JdbcTemplate jdbcTemplate;
 
+	@SuppressWarnings("unchecked")
 	@Override
 	public List<Usuario> getAll() {
+		final String SQL = "";
 		List<Usuario> usuarios = null;
-		this.jdbcCall = new SimpleJdbcCall(dataSource).
-				withProcedureName("getAllUsuario").
-				returningResultSet("usuarios", new UsuarioMapper());
-		SqlParameterSource in = new MapSqlParameterSource();
-		Map<String, Object> out = jdbcCall.execute(in);
-		usuarios = (List) out.get("usuarios");
-
+		usuarios = (List<Usuario>) jdbcCall.withProcedureName(SQL).returningResultSet("lista", new UsuarioMapper())
+				.execute().get("lista");
 		return usuarios;
 	}
-	
-	
+
 	@Override
 	public Usuario getById(int id) {
+		final String SQL = "";
 		Usuario usuario = null;
-		final String SQL = "SELECT codigo, nombre, apellidos, fnacimiento, email FROM usuario WHERE codigo = ?;";
-		try {
-			usuario = jdbctemplate.queryForObject(SQL, new Object[] { id }, new UsuarioMapper());
-		} catch (EmptyResultDataAccessException e) {
-			usuario = new Usuario();
-		} catch (Exception e) {
-			logger.error(e.getMessage());
-		}
-		logger.info("GetById ejecutado");
+		SqlParameterSource in = new MapSqlParameterSource().addValue("pid", id);
+		usuario = (Usuario) jdbcCall.withProcedureName(SQL).returningResultSet("usuario", new UsuarioMapper())
+				.execute(in).get("usuario");
 		return usuario;
 	}
-	@Override
-	public Usuario create(Usuario usuario) {
-		/*
-		 * createUsuario --> Nombre del procedimiento almacenado
-		 */
-		jdbcCall.withProcedureName("createUsuario");
-		/*
-		 * SqlParameterSource (tipo Map) guarda los paramentros necesarios para
-		 * el procedimiento
-		 */
-		SqlParameterSource in = new MapSqlParameterSource().addValue("nombre", usuario.getNombre()).addValue("apellidos", usuario.getApellidos())
-				.addValue("fnacimiento", new Date(usuario.getFnacimiento().getTime())).addValue("email", usuario.getEmail());
 
-		Map<String, Object> out = jdbcCall.execute(in);
-		/*
-		 * Recogemos el parametro OUT del procedimiento
-		 */
-		usuario.setCodigo((Integer) out.get("codigo"));
-		logger.info("create ejecutado");
-		return usuario;
+	@SuppressWarnings("unchecked")
+	@Override
+	public List<Usuario> find(Usuario usuario) {
+		final String SQL = "";
+		SqlParameterSource in = new MapSqlParameterSource().addValue("pid", usuario.getCodUsuario())
+				.addValue("palledidos", usuario.getApellidos()).addValue("pnombre", usuario.getNombre())
+				.addValue("pemail", usuario.getEmail()).addValue("puserid", usuario.getUserId());
+
+		List<Usuario> usuarios = null;
+		usuarios = (List<Usuario>) jdbcCall.withProcedureName(SQL).returningResultSet("lista", new UsuarioMapper())
+				.execute(in).get("lista");
+		return usuarios;
 	}
+
 	@Override
 	public Usuario update(Usuario usuario) {
-		final String SQL = "UPDATE usuario SET nombre = ?, apellidos = ?, fnacimiento = ?, email = ?  WHERE codigo = ?;";
-		jdbctemplate.update(SQL, new Object[] { usuario.getNombre(), usuario.getApellidos(), usuario.getFnacimiento(), usuario.getEmail(), usuario.getCodigo() });
-		logger.info("update ejecutado");
-		return usuario;
+		final String SQL = "";
+		SqlParameterSource in = new MapSqlParameterSource().addValue("pid", usuario.getCodUsuario())
+				.addValue("palledidos", usuario.getApellidos()).addValue("pnombre", usuario.getNombre())
+				.addValue("pemail", usuario.getEmail()).addValue("puserid", usuario.getUserId())
+				.addValue("ppassword", usuario.getPassword());
+		jdbcCall.withProcedureName(SQL).execute(in);
 
+		return usuario;
 	}
+
+	@Override
+	public Usuario create(Usuario usuario) {
+		final String SQL = "";
+		SqlParameterSource in = new MapSqlParameterSource().addValue("pid", usuario.getCodUsuario())
+				.addValue("palledidos", usuario.getApellidos()).addValue("pnombre", usuario.getNombre())
+				.addValue("pemail", usuario.getEmail()).addValue("puserid", usuario.getUserId())
+				.addValue("ppassword", usuario.getPassword());
+		Map<String, Object> out = jdbcCall.withProcedureName(SQL).execute(in);
+		usuario.setCodUsuario((Integer) out.get("pcodigo"));
+		return usuario;
+	}
+
 	@Override
 	public void delete(int id) {
-		final String SQL = "DELETE FROM usuario WHERE codigo = ?;";
-		jdbctemplate.update(SQL, new Object[] { id });
-		logger.info("delete ejecutado");
+		final String SQL = "";
+		SqlParameterSource in = new MapSqlParameterSource().addValue("pid", id);
+		jdbcCall.withProcedureName(SQL).execute(in);
 	}
-	
+
 	@Autowired
 	@Override
-	public void setDataSource(DataSource dataSource) {
-		this.dataSource = dataSource;
-		this.jdbctemplate = new JdbcTemplate(dataSource);
-		this.jdbcCall = new SimpleJdbcCall(dataSource);
+	public void setDataSource(DataSource datasource) {
+		this.dataSource = datasource;
+		this.jdbcCall = new SimpleJdbcCall(datasource);
+		this.jdbcTemplate = new JdbcTemplate(datasource);
+
 	}
 
 }

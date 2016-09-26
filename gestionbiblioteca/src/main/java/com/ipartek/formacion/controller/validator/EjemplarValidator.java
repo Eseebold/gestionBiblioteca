@@ -24,7 +24,7 @@ public class EjemplarValidator implements Validator {
 		Ejemplar eje = (Ejemplar) obj;
 
 		// ########## Metodo para ver si el codigo es 1 o superior
-		if (eje.getCodigo() < 0) {
+		if (eje.getCodLibro() < 0) {
 			errors.rejectValue("codigo", "codigoNulo", new Object[] { "'codigo'" }, "No puede ser ese valor");
 		}
 
