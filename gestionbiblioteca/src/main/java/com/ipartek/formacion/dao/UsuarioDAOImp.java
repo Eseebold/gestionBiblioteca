@@ -39,19 +39,14 @@ public class UsuarioDAOImp implements UsuarioDAO {
 	@Override
 	public List<Usuario> getAll() {
 		List<Usuario> usuarios = null;
-		this.jdbcCall = new SimpleJdbcCall(dataSource).withProcedureName("usuarioGetAll")
-				.returningResultSet("usuarios", new UsuarioMapper());
+		this.jdbcCall = new SimpleJdbcCall(dataSource).withProcedureName("usuarioGetAll").returningResultSet("usuarios", new UsuarioMapper());
 		SqlParameterSource in = new MapSqlParameterSource();
 		Map<String, Object> out = jdbcCall.execute(in);
 		usuarios = (List) out.get("usuarios");
-
+		logger.info("getAll ejecutado");
 		return usuarios;
 	}
 
-	
-	
-	
-	
 	@Override
 	public Usuario getById(int codigo) {
 		Usuario usuario = new Usuario();
@@ -59,39 +54,27 @@ public class UsuarioDAOImp implements UsuarioDAO {
 		usuario.setCodigo(codigo);
 		SqlParameterSource in = new MapSqlParameterSource().addValue("codigo", usuario.getCodigo());
 		Map<String, Object> out = jdbcCall.execute(in);
-
 		usuario.setNombre((String) out.get("nombre"));
 		usuario.setApellidos((String) out.get("apellidos"));
 		usuario.setFnacimiento((java.util.Date) out.get("fnacimiento"));
 		usuario.setEmail((String) out.get("email"));
 		usuario.setUsernick((String) out.get("usernick"));
 		usuario.setUserpass((String) out.get("userpass"));
-
+		logger.info("getById ejecutado");
 		return usuario;
 	}
-	
+
 	@Override
 	public Usuario create(Usuario usuario) {
-		/*
-		 * createUsuario --> Nombre del procedimiento almacenado
-		 */
 		jdbcCall.withProcedureName("usuarioCreate");
-		/*
-		 * SqlParameterSource (tipo Map) guarda los paramentros necesarios para
-		 * el procedimiento
-		 */
 		SqlParameterSource in = new MapSqlParameterSource()
-				.addValue("nombre", usuario.getNombre())
-				.addValue("apellidos", usuario.getApellidos())
-				.addValue("fnacimiento", new Date(usuario.getFnacimiento().getTime()))
-				.addValue("email", usuario.getEmail())
-				.addValue("usernick", usuario.getUsernick())
-				.addValue("userpass", usuario.getUserpass());
-
+			.addValue("nombre", usuario.getNombre())
+			.addValue("apellidos", usuario.getApellidos())
+			.addValue("fnacimiento", new Date(usuario.getFnacimiento().getTime()))
+			.addValue("email", usuario.getEmail())
+			.addValue("usernick", usuario.getUsernick())
+			.addValue("userpass", usuario.getUserpass());
 		Map<String, Object> out = jdbcCall.execute(in);
-		/*
-		 * Recogemos el parametro OUT del procedimiento
-		 */
 		usuario.setCodigo((Integer) out.get("codigo"));
 		logger.info("create ejecutado");
 		return usuario;
@@ -99,30 +82,21 @@ public class UsuarioDAOImp implements UsuarioDAO {
 
 	@Override
 	public Usuario update(Usuario usuario) {
-		final String SQL = "UPDATE usuario SET nombre = ?,"
-				+ " apellidos = ?,"
-				+ " fnacimiento = ?,"
-				+ " email = ?,"
-				+ " usernick = ?,"
-				+ "userpass = ? WHERE codigo = ?;";
-		jdbctemplate.update(SQL, new Object[] { 
-				usuario.getNombre(), 
-				usuario.getApellidos(), 
-				usuario.getFnacimiento(), 
-				usuario.getEmail(), 
-				usuario.getUsernick(),
-				usuario.getUserpass(),
-				usuario.getCodigo() });
+		this.jdbcCall = new SimpleJdbcCall(dataSource).withProcedureName("usuarioUpdate");
+		SqlParameterSource in = new MapSqlParameterSource().addValue("nombre", usuario.getNombre()).addValue("apellidos", usuario.getApellidos()).addValue("fnacimiento", usuario.getFnacimiento())
+				.addValue("email", usuario.getEmail()).addValue("usernick", usuario.getUsernick()).addValue("userpass", usuario.getUserpass());
+		Map<String, Object> out = jdbcCall.execute(in);
 		logger.info("update ejecutado");
 		return usuario;
-
 	}
 
 	@Override
 	public void delete(int id) {
-		final String SQL = "DELETE FROM usuario WHERE codigo = ?;";
-		jdbctemplate.update(SQL, new Object[] { id });
+		this.jdbcCall = new SimpleJdbcCall(dataSource).withProcedureName("usuarioDelete");
+		SqlParameterSource in = new MapSqlParameterSource().addValue("codigo", id);
+		Map<String, Object> out = jdbcCall.execute(in);
 		logger.info("delete ejecutado");
+
 	}
 
 	@Autowired

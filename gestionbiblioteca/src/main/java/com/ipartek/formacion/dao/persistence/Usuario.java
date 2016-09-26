@@ -23,8 +23,6 @@ public class Usuario implements Serializable {
 	@Min(value = 1)
 	private int codigo;
 	@NotNull
-	private String codejemplar;
-	@NotNull
 	private String nombre;
 	@NotNull
 	private String apellidos;
@@ -51,14 +49,6 @@ public class Usuario implements Serializable {
 
 	public void setCodigo(int codigo) {
 		this.codigo = codigo;
-	}
-
-	public String getCodejemplar() {
-		return codejemplar;
-	}
-
-	public void setCodejemplar(String string) {
-		this.codejemplar = string;
 	}
 
 	public String getNombre() {

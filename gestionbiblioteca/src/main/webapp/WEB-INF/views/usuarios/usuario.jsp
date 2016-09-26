@@ -41,6 +41,20 @@
 					<form:errors cssClass="text-danger" path="email" />
 				</div>
 				<div class="form-group">
+					<form:label path="usernick">
+						<spring:message code="usuario.usernick" />:
+				</form:label>
+					<form:input path="usernick" cssClass="form-control" cssErrorClass="" />
+					<form:errors cssClass="text-danger" path="usernick" />
+				</div>
+				<div class="form-group">
+					<form:label path="userpass">
+						<spring:message code="usuario.userpass" />:
+				</form:label>
+					<form:input type="password" path="userpass" cssClass="form-control" cssErrorClass="" />
+					<form:errors cssClass="text-danger" path="userpass" />
+				</div>
+				<div class="form-group">
 					<a href="<c:url value='/usuarios'/>" class="btn btn-danger">ATRAS</a>
 					<c:set var="msgBoton" value="CREAR" />
 					<c:if test="${usuario.codigo > 0}">
