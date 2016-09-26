@@ -39,9 +39,7 @@ public class LibroDAOImp implements LibroDAO {
 	@Override
 	public List<Libro> getAll() {
 		List<Libro> libros = null;
-		this.jdbcCall = new SimpleJdbcCall(dataSource).
-				withProcedureName("getAllLibro").
-				returningResultSet("libros", new LibroMapper());
+		this.jdbcCall = new SimpleJdbcCall(dataSource).withProcedureName("getAllLibro").returningResultSet("libros", new LibroMapper());
 		SqlParameterSource in = new MapSqlParameterSource();
 		Map<String, Object> out = jdbcCall.execute(in);
 		libros = (List) out.get("libros");
@@ -79,7 +77,8 @@ public class LibroDAOImp implements LibroDAO {
 
 	public Libro update(Libro libro) {
 		this.jdbcCall = new SimpleJdbcCall(dataSource).withProcedureName("updateLibro");
-		SqlParameterSource in = new MapSqlParameterSource().addValue("codigo", libro.getCodigo()).addValue("titulo", libro.getTitulo()).addValue("autor", libro.getAutor()).addValue("isbn", libro.getIsbn());
+		SqlParameterSource in = new MapSqlParameterSource().addValue("codigo", libro.getCodigo()).addValue("titulo", libro.getTitulo()).addValue("autor", libro.getAutor())
+				.addValue("isbn", libro.getIsbn());
 		Map<String, Object> out = jdbcCall.execute(in);
 		return libro;
 	}

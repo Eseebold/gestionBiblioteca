@@ -19,6 +19,7 @@ import com.ipartek.formacion.dao.interfaces.EjemplarDAO;
 import com.ipartek.formacion.dao.mappers.EjemplarMapper;
 import com.ipartek.formacion.dao.mappers.LibroMapper;
 import com.ipartek.formacion.dao.persistence.Ejemplar;
+import com.ipartek.formacion.dao.persistence.Usuario;
 
 /**
  * 
@@ -38,9 +39,7 @@ public class EjemplarDAOImp implements EjemplarDAO {
 	@Override
 	public List<Ejemplar> getAll() {
 		List<Ejemplar> ejemplares = null;
-		this.jdbcCall = new SimpleJdbcCall(dataSource).
-				withProcedureName("getAllEjemplar").
-				returningResultSet("ejemplares", new EjemplarMapper());
+		this.jdbcCall = new SimpleJdbcCall(dataSource).withProcedureName("getAllEjemplar").returningResultSet("ejemplares", new EjemplarMapper());
 		SqlParameterSource in = new MapSqlParameterSource();
 		Map<String, Object> out = jdbcCall.execute(in);
 		ejemplares = (List) out.get("ejemplares");
@@ -49,17 +48,16 @@ public class EjemplarDAOImp implements EjemplarDAO {
 	}
 
 	@Override
-	public Ejemplar getById(int id) {
-		Ejemplar ejemplar = null;
-		final String SQL = "SELECT codigo, editorial, paginas FROM ejemplar WHERE codigo = ?;";
-		try {
-			ejemplar = jdbctemplate.queryForObject(SQL, new Object[] { id }, new EjemplarMapper());
-		} catch (EmptyResultDataAccessException e) {
-			ejemplar = new Ejemplar();
-		} catch (Exception e) {
-			logger.error(e.getMessage());
-		}
-		logger.info("GetById ejecutado");
+	public Ejemplar getById(int codigo) {
+		Ejemplar ejemplar = new Ejemplar();
+		this.jdbcCall = new SimpleJdbcCall(dataSource).withProcedureName("usuarioGetById");
+		ejemplar.setCodigo(codigo);
+		SqlParameterSource in = new MapSqlParameterSource().addValue("codigo", ejemplar.getCodigo());
+		Map<String, Object> out = jdbcCall.execute(in);
+
+		ejemplar.setEditorial((String) out.get("editorial"));
+		ejemplar.setPaginas((Integer) out.get("paginas"));
+
 		return ejemplar;
 	}
 
