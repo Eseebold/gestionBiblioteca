@@ -13,10 +13,13 @@ import javax.validation.constraints.Past;
  *
  */
 public class Usuario implements Serializable {
-	/**
-	 * 
-	 */
+		/**
+		 * 
+		 */
+	
 	private static final long serialVersionUID = 1L;
+	
+	
 	@Min(value = 1)
 	private int codigo;
 	@NotNull
@@ -29,6 +32,8 @@ public class Usuario implements Serializable {
 	@Past
 	private Date fnacimiento;
 	private String email;
+	private String usernick;
+	private String userpass;
 
 	public Usuario() {
 		super();
@@ -86,5 +91,21 @@ public class Usuario implements Serializable {
 
 	public void setEmail(String email) {
 		this.email = email;
+	}
+
+	public String getUsernick() {
+		return usernick;
+	}
+
+	public void setUsernick(String usernick) {
+		this.usernick = usernick;
+	}
+
+	public String getUserpass() {
+		return userpass;
+	}
+
+	public void setUserpass(String userpass) {
+		this.userpass = userpass;
 	}
 }
